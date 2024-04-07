@@ -1,13 +1,29 @@
 import { NativeButton, NativeInput, NativeText, NativeView } from '@/components/Themed'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { requestLogin } from '@/api/user'
 import Toast from 'react-native-root-toast';
 import { router } from 'expo-router'
+import { getServerUrlSettingStoreData, saveServerUrlSettingStoreData } from '@/store/setting'
 
 export default function Login() {
 
     const [ username, setUsername ] = useState("")
     const [ password, setPassword ] = useState("")
+
+    const [ serverUrl, setServerUrl ] = useState("")
+
+    useEffect(() => {
+        getServerUrlSettingStoreData(false).then(v => {
+            if (v) {
+                setServerUrl(v);
+            }
+        })
+    }, []);
+
+    async function handleServerUrl(val: string) {
+        setServerUrl(val);
+        await saveServerUrlSettingStoreData(val)
+    }
 
     const toastOptions = {
         duration: Toast.durations.LONG,
@@ -23,7 +39,7 @@ export default function Login() {
             return
         }
         const r = await requestLogin(username, password)
-        console.log(r.username, "登录成功")
+        console.debug(r.username, "登录成功")
 
         Toast.show(`${ r.username }, 登录成功`, toastOptions);
         router.replace('/');
@@ -34,6 +50,12 @@ export default function Login() {
             <NativeView style={ {flexDirection: "column", gap: 10, transform: [ {translateY: -100,}, ]} }>
                 <NativeText style={ {fontSize: 70, textAlign: 'center'} }>whale</NativeText>
                 <NativeView style={ {marginHorizontal: 10, flexDirection: "column", gap: 20} }>
+                    <NativeInput
+                        style={ {height: 40, borderWidth: 1} }
+                        onChangeText={ handleServerUrl }
+                        defaultValue={ serverUrl }
+                        placeholder='请输入服务地址'
+                    />
                     <NativeInput placeholder="请输入账户" keyboardType="email-address" value={ username } onChangeText={ setUsername }/>
                     <NativeInput placeholder="请输入密码" secureTextEntry={ true } value={ password } onChangeText={ setPassword }/>
                 </NativeView>
