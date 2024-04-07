@@ -1,3 +1,3 @@
 import *  as request from "./request"
 
-export  { request }
+export { request }

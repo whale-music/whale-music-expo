@@ -5,16 +5,16 @@ import { NativeText, NativeView } from '@/components/Themed';
 
 export default function NotFoundScreen() {
   return (
-    <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <NativeView style={styles.container}>
-        <NativeText style={styles.title}>This screen doesn't exist.</NativeText>
+      <>
+        <Stack.Screen options={ {title: 'Oops!'} }/>
+        <NativeView style={ styles.container }>
+          <NativeText style={ styles.title }>This screen doesn't exist.</NativeText>
 
-        <Link href="/" style={styles.link}>
-          <NativeText style={styles.linkText}>Go to home screen!</NativeText>
-        </Link>
-      </NativeView>
-    </>
+          <Link href="/" style={ styles.link }>
+            <NativeText style={ styles.linkText }>Go to home screen!</NativeText>
+          </Link>
+        </NativeView>
+      </>
   );
 }
 

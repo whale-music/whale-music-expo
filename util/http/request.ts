@@ -1,4 +1,4 @@
-export const request =  async <T> (method: "get" | "post", url: string, body?: BodyInit, headers?: HeadersInit, timeout: number = 10_000, prop = {}):Promise<T> => {
+export const request = async <T>(method: "get" | "post", url: string, body?: BodyInit, headers?: HeadersInit, timeout: number = 10_000, prop = {}): Promise<T> => {
     const _headers = {
         'Content-Type': 'application/json',
         ...headers

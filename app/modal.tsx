@@ -6,14 +6,14 @@ import { NativeText, NativeView } from '@/components/Themed';
 
 export default function ModalScreen() {
   return (
-    <NativeView style={styles.container}>
-      <NativeText style={styles.title}>Modal</NativeText>
-      <NativeView style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/modal.tsx" />
+      <NativeView style={ styles.container }>
+        <NativeText style={ styles.title }>Modal</NativeText>
+        <NativeView style={ styles.separator } lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
+        <EditScreenInfo path="app/modal.tsx"/>
 
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-    </NativeView>
+        {/* Use a light status bar on iOS to account for the black space above the modal */ }
+        <StatusBar style={ Platform.OS === 'ios' ? 'light' : 'auto' }/>
+      </NativeView>
   );
 }
 

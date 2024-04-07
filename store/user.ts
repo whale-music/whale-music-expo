@@ -1,4 +1,4 @@
-import { getStoreData, mergeStoreData, storeData } from '@/store/store'
+import { getStoreData, storeData } from '@/store/store'
 
 
 export interface LoginRes {
