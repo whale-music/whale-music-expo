@@ -1,22 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet } from 'react-native';
 import { NativeButton, NativeText, NativeView } from '@/components/Themed';
-import { useEffect, useState } from 'react'
-import { getServerUrlSettingStoreData } from '@/store/setting'
 import { removeUserStore } from '@/store/user'
 import Toast from 'react-native-root-toast'
 
 export default function ModalScreen() {
-    const [ serverUrl, setServerUrl ] = useState("")
-
-    useEffect(() => {
-        getServerUrlSettingStoreData(false).then(v => {
-            if (v) {
-                setServerUrl(v);
-            }
-        })
-    }, []);
-
     async function destroyUserCache() {
         await removeUserStore()
         Toast.show("清除成功")
