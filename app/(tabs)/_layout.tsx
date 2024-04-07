@@ -7,14 +7,16 @@ import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { NativeView } from '@/components/Themed'
-import { KeyRound, Settings } from 'lucide-react-native';
+import { KeyRound, ListMusic, Settings, UserRound } from 'lucide-react-native';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
+const size = 28
+
 function TabBarIcon(props: {
     name: React.ComponentProps<typeof FontAwesome>['name'];
     color: string;
 }) {
-    return <FontAwesome size={ 28 } style={ {marginBottom: -3} } { ...props } />;
+    return <FontAwesome size={ size } style={ {marginBottom: -3} } { ...props } />;
 }
 
 export default function TabLayout() {
@@ -32,7 +34,7 @@ export default function TabLayout() {
                 name="index"
                 options={ {
                     title: 'Tab One',
-                    tabBarIcon: ({color}) => <TabBarIcon name="code" color={ color }/>,
+                    tabBarIcon: ({color}) => <UserRound size={ size } color={ color }/>,
                     headerRight: () => (
                         <NativeView style={ {flexDirection: "row"} }>
                             <Link href="/login" asChild>
@@ -65,7 +67,7 @@ export default function TabLayout() {
                 name="two"
                 options={ {
                     title: 'Tab Two',
-                    tabBarIcon: ({color}) => <TabBarIcon name="code" color={ color }/>,
+                    tabBarIcon: ({color}) => <ListMusic size={ size } color={ color }/>,
                 } }
             />
         </Tabs>
