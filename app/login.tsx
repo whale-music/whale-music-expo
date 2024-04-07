@@ -4,6 +4,7 @@ import { requestLogin } from '@/api/user'
 import Toast from 'react-native-root-toast';
 import { router } from 'expo-router'
 import { getServerUrlSettingStoreData, saveServerUrlSettingStoreData } from '@/store/setting'
+import { StyleSheet } from 'react-native'
 
 export default function Login() {
 
@@ -47,20 +48,27 @@ export default function Login() {
 
     return (
         <NativeView style={ {flex: 1, justifyContent: "center"} }>
-            <NativeView style={ {flexDirection: "column", gap: 10, transform: [ {translateY: -100,}, ]} }>
+            <NativeView style={ {flexDirection: "column", gap: 10, transform: [ {translateY: -70,}, ]} }>
                 <NativeText style={ {fontSize: 70, textAlign: 'center'} }>whale</NativeText>
                 <NativeView style={ {marginHorizontal: 10, flexDirection: "column", gap: 20} }>
                     <NativeInput
-                        style={ {height: 40, borderWidth: 1} }
+                        style={ [ styles.input ] }
                         onChangeText={ handleServerUrl }
                         defaultValue={ serverUrl }
                         placeholder='请输入服务地址'
                     />
-                    <NativeInput placeholder="请输入账户" keyboardType="email-address" value={ username } onChangeText={ setUsername }/>
-                    <NativeInput placeholder="请输入密码" secureTextEntry={ true } value={ password } onChangeText={ setPassword }/>
+                    <NativeInput style={ styles.input } placeholder="请输入账户" keyboardType="email-address" value={ username } onChangeText={ setUsername }/>
+                    <NativeInput style={ styles.input } placeholder="请输入密码" secureTextEntry={ true } value={ password } onChangeText={ setPassword }/>
                 </NativeView>
                 <NativeButton style={ {backgroundColor: 'white'} } textStyle={ {color: 'black'} } onPress={ login }> 登录 </NativeButton>
             </NativeView>
         </NativeView>
     )
 }
+
+
+const styles = StyleSheet.create({
+    input: {
+        padding: 15,
+    },
+});

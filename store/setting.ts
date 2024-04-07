@@ -22,8 +22,9 @@ export const getServerUrlSettingStoreData = async (isRouterJump: boolean = true)
     if (!serverUrl && isRouterJump) {
         router.replace('/setting');
         throw new Error('url error')
+    } else {
+        return serverUrl;
     }
-    return serverUrl;
 }
 
 export const saveServerUrlSettingStoreData = async (url: string) => {
