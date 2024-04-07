@@ -3,7 +3,7 @@
  * https://docs.expo.io/guides/color-schemes/
  */
 
-import { Text as DefaultText, View as DefaultView } from 'react-native';
+import { Text as DefaultText, TextInput, View as DefaultView } from 'react-native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from './useColorScheme';
@@ -15,6 +15,7 @@ type ThemeProps = {
 
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
+export type TextInputProps = ThemeProps & TextInput['props'];
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -30,16 +31,43 @@ export function useThemeColor(
   }
 }
 
-export function Text(props: TextProps) {
+export function NativeText(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
   return <DefaultText style={[{ color }, style]} {...otherProps} />;
 }
 
-export function View(props: ViewProps) {
+export function NativeView(props: ViewProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }
+
+export function NativeInput(props: TextInputProps) {
+    const {style, lightColor, darkColor, placeholderTextColor, ...otherProps} = props;
+
+    const textColor = useThemeColor({ light: lightColor, dark: darkColor}, 'text');
+
+    const theme = useColorScheme() ?? 'light';
+    const rgba = theme === 'light' ? 'rgb(241, 242, 242)' : 'rgba(20, 20, 20, 0.8)';
+    return (
+        <TextInput
+            { ...props }
+            placeholderTextColor="gray"
+            style={ [
+                {
+                    fontSize: 16,
+                    color: textColor,
+                    backgroundColor: rgba,
+                    borderRadius: 10,
+                    padding: 10,
+                    borderColor: "transparent"
+                },
+                style
+            ] }
+        />
+    )
+}
+
