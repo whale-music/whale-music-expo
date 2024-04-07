@@ -1,4 +1,4 @@
-import { getStoreData, storeData } from '@/store/store'
+import { getStoreData, removeStoreData, storeData } from '@/store/store'
 
 
 export interface LoginRes {
@@ -26,4 +26,8 @@ export const getUserId = async (): Promise<number | undefined> => {
 
 export const getUserToken = async (): Promise<string | undefined> => {
     return (await getStoreData<LoginRes>(USER_KEY))?.accessToken
+}
+
+export const removeUserStore = async () => {
+    await removeStoreData(USER_KEY)
 }

@@ -1,8 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet } from 'react-native';
-import { NativeInput, NativeText, NativeView } from '@/components/Themed';
+import { NativeButton, NativeText, NativeView } from '@/components/Themed';
 import { useEffect, useState } from 'react'
-import { getServerUrlSettingStoreData, saveServerUrlSettingStoreData } from '@/store/setting'
+import { getServerUrlSettingStoreData } from '@/store/setting'
+import { removeUserStore } from '@/store/user'
+import Toast from 'react-native-root-toast'
 
 export default function ModalScreen() {
     const [ serverUrl, setServerUrl ] = useState("")
@@ -15,27 +17,20 @@ export default function ModalScreen() {
         })
     }, []);
 
-    async function handleServerUrl(val: string) {
-        setServerUrl(val);
-        await saveServerUrlSettingStoreData(val)
+    async function destroyUserCache() {
+        await removeUserStore()
+        Toast.show("清除成功")
     }
 
     return (
         <NativeView style={ styles.container }>
-            <NativeView>
-                <NativeText style={ {fontSize: 30} }>服务地址</NativeText>
-                <NativeInput
-                    style={ {height: 40, borderWidth: 1} }
-                    onChangeText={ handleServerUrl }
-                    defaultValue={ serverUrl }
-                    placeholder='请输入服务地址'
-                />
-                {/*<TextInput variant="outline" size="md" isDisabled={ false } isInvalid={ false } isReadOnly={ false }>*/ }
-                {/*    <InputField defaultValue={ serverUrl } onChangeText={ handleServerUrl } color={ colorScheme === 'dark' ? "$textLight0" : "$textDark950" } placeholder='请输入服务地址'/>*/ }
-                {/*</TextInput>*/ }
-            </NativeView>
             {/* Use a light status bar on iOS to account for the black space above the modal */ }
             <StatusBar style={ Platform.OS === 'ios' ? 'light' : 'auto' }/>
+
+            <NativeView style={ {flexDirection: 'row', justifyContent: "space-between", alignItems: "center", padding: 5} }>
+                <NativeText style={ {marginLeft: 10, fontSize: 20} }>清除缓存</NativeText>
+                <NativeButton style={ {backgroundColor: 'red', borderWidth: 0, margin: 0} } textStyle={ {color: 'white'} } onPress={ destroyUserCache }>清除</NativeButton>
+            </NativeView>
         </NativeView>
     );
 }

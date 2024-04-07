@@ -24,3 +24,7 @@ export const mergeStoreData = async <T>(key: string, value: T): Promise<T | unde
     await AsyncStorage.mergeItem(key, JSON.stringify(value))
     return await getStoreData<T>(key)
 }
+
+export const removeStoreData = async (key: string) => {
+    await AsyncStorage.removeItem(key)
+}
