@@ -8,7 +8,7 @@ export default function ModalScreen() {
     const [ serverUrl, setServerUrl ] = useState("")
 
     useEffect(() => {
-        getServerUrlSettingStoreData().then(v => {
+        getServerUrlSettingStoreData(false).then(v => {
             if (v) {
                 setServerUrl(v);
             }

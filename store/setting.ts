@@ -1,4 +1,5 @@
 import { getStoreData, mergeStoreData, storeData } from '@/store/store'
+import { router } from 'expo-router'
 
 export interface SettingStoreData {
     serverUrl?: string;
@@ -15,8 +16,14 @@ export const saveSettingStoreData = async (value: SettingStoreData) => {
     await storeData(SETTING_KEY, value)
 }
 
-export const getServerUrlSettingStoreData = async (): Promise<string | undefined> => {
-    return (await getStoreData<SettingStoreData>(SETTING_KEY))?.serverUrl
+export const getServerUrlSettingStoreData = async (isRouterJump: boolean = true): Promise<string | undefined> => {
+    const serverUrl = (await getStoreData<SettingStoreData>(SETTING_KEY))?.serverUrl
+    // 是否跳转， 如果没有地址则跳转到填写地址界面
+    if (!serverUrl && isRouterJump) {
+        router.replace('/setting');
+        throw new Error('url error')
+    }
+    return serverUrl;
 }
 
 export const saveServerUrlSettingStoreData = async (url: string) => {

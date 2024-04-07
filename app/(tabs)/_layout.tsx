@@ -7,7 +7,7 @@ import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { NativeView } from '@/components/Themed'
-import { Settings } from 'lucide-react-native';
+import { KeyRound, Settings } from 'lucide-react-native';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -35,11 +35,10 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <NativeView style={{ flexDirection: "row"}}>
-                <Link href="/modal" asChild>
+                <Link href="/login" asChild>
                     <Pressable>
                         {({ pressed }) => (
-                            <FontAwesome
-                                name="info-circle"
+                            <KeyRound
                                 size={25}
                                 color={Colors[colorScheme ?? 'light'].text}
                                 style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
