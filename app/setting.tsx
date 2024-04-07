@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, useColorScheme } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { NativeInput, NativeText, NativeView } from '@/components/Themed';
 import { useEffect, useState } from 'react'
 import { getServerUrlSettingStoreData, saveServerUrlSettingStoreData } from '@/store/setting'
@@ -15,19 +15,18 @@ export default function ModalScreen() {
         })
     }, []);
 
-    function handleServerUrl(val: string) {
+    async function handleServerUrl(val: string) {
         setServerUrl(val);
-        saveServerUrlSettingStoreData(val)
+        await saveServerUrlSettingStoreData(val)
     }
 
-    const colorScheme = useColorScheme();
     return (
         <NativeView style={ styles.container }>
             <NativeView>
                 <NativeText style={ {fontSize: 30} }>服务地址</NativeText>
                 <NativeInput
                     style={ {height: 40, borderWidth: 1} }
-                    onChangeText={ setServerUrl }
+                    onChangeText={ handleServerUrl }
                     defaultValue={ serverUrl }
                     placeholder='请输入服务地址'
                 />
