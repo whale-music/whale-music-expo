@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
 import { useColorScheme } from '@/components/useColorScheme';
+import { RootSiblingParent } from 'react-native-root-siblings'
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -50,13 +51,15 @@ function RootLayoutNav() {
     const colorScheme = useColorScheme();
 
     return (
-        <ThemeProvider value={ colorScheme === 'dark' ? DarkTheme : DefaultTheme }>
-            <Stack>
-                <Stack.Screen name="(tabs)" options={ {headerShown: false} }/>
-                <Stack.Screen name="modal" options={ {presentation: 'modal'} }/>
-                <Stack.Screen name="setting" options={ {presentation: 'modal'} }/>
-                <Stack.Screen name="login" options={ {headerShown: false} }/>
-            </Stack>
-        </ThemeProvider>
+        <RootSiblingParent>
+            <ThemeProvider value={ colorScheme === 'dark' ? DarkTheme : DefaultTheme }>
+                <Stack>
+                    <Stack.Screen name="(tabs)" options={ {headerShown: false} }/>
+                    <Stack.Screen name="modal" options={ {presentation: 'modal'} }/>
+                    <Stack.Screen name="setting" options={ {presentation: 'modal'} }/>
+                    <Stack.Screen name="login" options={ {headerShown: false} }/>
+                </Stack>
+            </ThemeProvider>
+        </RootSiblingParent>
     );
 }
