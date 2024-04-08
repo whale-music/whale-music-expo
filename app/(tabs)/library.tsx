@@ -1,21 +1,15 @@
 import { SafeAreaView, StyleSheet, TouchableOpacity, VirtualizedList } from 'react-native';
 import { NativeText, NativeView } from '@/components/Themed';
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getResource, Resource } from '@/api/resource'
 import { AudioLines } from 'lucide-react-native'
 import { useColorScheme } from '@/components/useColorScheme';
 import { Theme } from '@/constants/Theme'
-import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet'
-import AudioPlay from '@/components/AudioPlay'
+import { SheetManager } from 'react-native-actions-sheet'
+import { audioPreview } from '@/components/ActionsSheet/sheets'
 
 export default function App() {
-    const theme = Theme()
-
-    const selectItem = useRef<Resource>();
-    // const [ selectItem, setSelectItem ] = useState<Resource>()
     const [ resources, setResources ] = useState<Resource[]>([])
-
-    const actionSheetRef = useRef<ActionSheetRef>(null);
 
     useEffect(() => {
         (async function () {
@@ -42,9 +36,10 @@ export default function App() {
         const theme = Theme()
 
         const resource = value
-        const onPress = () => {
-            selectItem.current = resource
-            actionSheetRef.current?.show();
+        const onPress = async () => {
+            await SheetManager.show(audioPreview, {
+                payload: {value: resource},
+            });
         }
         return (
             <>
@@ -67,46 +62,8 @@ export default function App() {
         )
     }
 
-    function ActionSheetContent() {
-        const current = selectItem.current
-        const bgStyle = {backgroundColor: theme.secondaryBackground};
-        if (!current) {
-            return (
-                <NativeView style={ [ {flex: 1, justifyContent: 'center', alignItems: 'center',}, bgStyle ] }>
-                    <NativeText style={ {fontSize: 20} }>请重新选择数据</NativeText>
-                </NativeView>
-            )
-        } else {
-            return (
-                <NativeView style={ [ {paddingTop: 20, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}, bgStyle ] }>
-                    <AudioPlay resource={ current } url={ current.url } style={ bgStyle }/>
-                </NativeView>
-            )
-        }
-    }
-
-    const NativeActionSheet = () => (
-        <ActionSheet ref={ actionSheetRef }
-                     containerStyle={ {
-                         borderTopLeftRadius: 25,
-                         borderTopRightRadius: 25,
-                         backgroundColor: theme.secondaryBackground
-                     } }
-                     indicatorStyle={ {
-                         width: 100,
-                         opacity: 0.6,
-                         backgroundColor: theme.text
-                     } }
-                     gestureEnabled={ true }
-        >
-            <NativeView style={ {height: 200, backgroundColor: theme.secondaryBackground} }>
-                <ActionSheetContent/>
-            </NativeView>
-        </ActionSheet>
-    )
     return (
         <>
-            <NativeActionSheet/>
             <SafeAreaView>
                 <VirtualizedList
                     initialNumToRender={ 20 }

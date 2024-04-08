@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Audio, AudioMode } from 'expo-av';
 import { InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av/src/Audio.types'
 import { AVPlaybackStatus } from 'expo-av/src/AV'
@@ -44,6 +44,7 @@ export default function AudioPlay({resource, url, style}: { resource: Resource, 
     async function playSound() {
         if (audioSound) {
             await audioSound.playAsync()
+            return;
         }
 
         let source = {uri: url}
@@ -56,9 +57,7 @@ export default function AudioPlay({resource, url, style}: { resource: Resource, 
         await sound.playAsync();
     }
 
-
     const setSeek = (val: number) => {
-        console.log(val, "num")
         audioSound?.setPositionAsync(val);
     }
 
@@ -76,9 +75,10 @@ export default function AudioPlay({resource, url, style}: { resource: Resource, 
 
         if (audioStatus?.isBuffering) {
             return (
-                <NativeText>loading...</NativeText>
+                <NativeText style={ {fontSize: 20} }>loading...</NativeText>
             )
         }
+
         return (
             <>
                 <NativeView style={ [ styles.buttonContainer, style ] }>
@@ -93,9 +93,9 @@ export default function AudioPlay({resource, url, style}: { resource: Resource, 
                             maximumTrackTintColor="#9E9E9E" // 设置未填充轨道的颜色
                             thumbTintColor="#fff" // 设置滑块的颜色
                             value={ audioStatus?.positionMillis || 0 }
-                            onSlidingStart={ setSeek }
                             onValueChange={ setSeek }
                             disabled={ !audioStatus?.isPlaying }
+                            tapToSeek={ true }
                         />
                         <NativeText style={ {opacity: 0.5} }>{ secondsToTime(audioStatus?.durationMillis) }</NativeText>
                     </NativeView>
@@ -112,9 +112,9 @@ export default function AudioPlay({resource, url, style}: { resource: Resource, 
     }
 
     return (
-        <View>
+        <NativeView>
             <LoadSuccess/>
-        </View>
+        </NativeView>
     )
 }
 
