@@ -31,7 +31,7 @@ export default function TabLayout() {
                 headerShown: useClientOnlyValue(false, true),
             } }>
             <Tabs.Screen
-                name="user"
+                name="index"
                 options={ {
                     title: 'User',
                     tabBarIcon: ({color}) => <UserRound size={ size } color={ color }/>,
