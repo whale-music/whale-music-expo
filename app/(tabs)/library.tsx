@@ -3,6 +3,8 @@ import { NativeText, NativeView } from '@/components/Themed';
 import { useEffect, useState } from 'react'
 import { getResource, Resource } from '@/api/resource'
 import { AudioLines } from 'lucide-react-native'
+import { useColorScheme } from '@/components/useColorScheme';
+import { Theme } from '@/constants/Theme'
 
 export default function App() {
 
@@ -42,11 +44,14 @@ export default function App() {
 }
 
 function Item({resources}: { resources: Resource }) {
+    const light = (useColorScheme() ?? 'light') === 'light';
+    const iconColor = light ? '#000' : '#fff'
+    const theme = Theme()
     return (
         <>
-            <TouchableOpacity>
+            <TouchableOpacity style={ {backgroundColor: theme.background} }>
                 <NativeView style={ [ {opacity: resources.status ? 1 : 0.5}, styles.item ] }>
-                    <AudioLines size={ 28 } color={ "#fff" }/>
+                    <AudioLines size={ 28 } color={ iconColor }/>
                     <NativeView style={ styles.itemTitle }>
                         <NativeText numberOfLines={ 1 }>
                             { resources.name }
@@ -62,8 +67,6 @@ function Item({resources}: { resources: Resource }) {
 }
 
 const ItemSeparator = () => (
-    // <></>
-    // <NativeView style={ {height: 10} }/>
     <NativeView style={ {flexDirection: "row-reverse"} }>
         <NativeView style={ styles.separator }/>
     </NativeView>
