@@ -13,7 +13,6 @@ export default function TabOneScreen() {
     useEffect(() => {
         (async function () {
             const r = await getUserInfo()
-            console.log(r, 'user info')
             setUserInfo(r)
         })()
 
@@ -21,9 +20,9 @@ export default function TabOneScreen() {
 
     useEffect(() => {
         navigation.setOptions({
-            title: userInfo?.username ? userInfo.username : "hello" // 使用 title 属性来设置顶栏标题
+            title: userInfo?.username !== undefined ? userInfo.username : "User" // 使用 title 属性来设置顶栏标题
         });
-    }, []);
+    }, [ userInfo?.username ]);
 
     if (!userInfo && userInfo === undefined) {
         return (

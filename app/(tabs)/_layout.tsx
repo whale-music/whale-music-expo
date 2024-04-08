@@ -33,7 +33,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="index"
                 options={ {
-                    title: 'Tab One',
+                    title: 'User',
                     tabBarIcon: ({color}) => <UserRound size={ size } color={ color }/>,
                     headerRight: () => (
                         <NativeView style={ {flexDirection: "row"} }>
