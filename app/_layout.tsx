@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useColorScheme } from '@/components/useColorScheme';
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { SheetProvider } from 'react-native-actions-sheet';
+import { Theme } from '@/constants/Theme'
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -50,13 +51,14 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
     const colorScheme = useColorScheme();
+    const theme = Theme()
 
     return (
         <RootSiblingParent>
             <SheetProvider>
                 <ThemeProvider value={ colorScheme === 'dark' ? DarkTheme : DefaultTheme }>
                     <Stack>
-                        <Stack.Screen name="(tabs)" options={ {headerShown: false} }/>
+                        <Stack.Screen name="(tabs)" options={ {headerShown: false, headerStyle: {backgroundColor: theme.background}} }/>
                         <Stack.Screen name="modal" options={ {presentation: 'modal'} }/>
                         <Stack.Screen name="setting" options={ {presentation: 'modal'} }/>
                         <Stack.Screen name="login" options={ {headerShown: false} }/>
