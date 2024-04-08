@@ -20,7 +20,7 @@ export const getServerUrlSettingStoreData = async (isRouterJump: boolean = true)
     const serverUrl = (await getStoreData<SettingStoreData>(SETTING_KEY))?.serverUrl
     // 是否跳转， 如果没有地址则跳转到填写地址界面
     if (!serverUrl && isRouterJump) {
-        router.replace('/setting');
+        router.replace('/login');
         throw new Error('url is null, Please enter Url')
     } else {
         return serverUrl;
