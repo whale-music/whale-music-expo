@@ -38,7 +38,7 @@ export default function AudioPreviewActionsSheet(props: SheetProps<"audio-previe
                 indicatorStyle={ {
                     width: 100,
                     opacity: 0.6,
-                    backgroundColor: theme.text
+                    backgroundColor: theme.foreground
                 } }
                 gestureEnabled={ true }
             >

@@ -2,12 +2,10 @@ import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable } from 'react-native';
-
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { NativeView } from '@/components/Themed'
 import { KeyRound, ListMusic, Settings, UserRound } from 'lucide-react-native';
+import { Theme } from '@/constants/Theme'
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 const size = 28
@@ -20,12 +18,11 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-    const colorScheme = useColorScheme();
-
+    const theme = Theme()
     return (
         <Tabs
             screenOptions={ {
-                tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+                tabBarActiveTintColor: theme.tabIconDefault,
                 // Disable the static render of the header on web
                 // to prevent a hydration error in React Navigation v6.
                 headerShown: useClientOnlyValue(false, true),
@@ -42,7 +39,7 @@ export default function TabLayout() {
                                     { ({pressed}) => (
                                         <KeyRound
                                             size={ 25 }
-                                            color={ Colors[colorScheme ?? 'light'].text }
+                                            color={ theme.foreground }
                                             style={ {marginRight: 15, opacity: pressed ? 0.5 : 1} }
                                         />
                                     ) }
@@ -53,7 +50,7 @@ export default function TabLayout() {
                                     { ({pressed}) => (
                                         <Settings
                                             size={ 25 }
-                                            color={ Colors[colorScheme ?? 'light'].text }
+                                            color={ theme.foreground }
                                             style={ {marginRight: 15, opacity: pressed ? 0.5 : 1} }
                                         />
                                     ) }
