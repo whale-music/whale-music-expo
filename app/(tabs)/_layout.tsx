@@ -31,7 +31,7 @@ export default function TabLayout() {
                 headerShown: useClientOnlyValue(false, true),
             } }>
             <Tabs.Screen
-                name="index"
+                name="user"
                 options={ {
                     title: 'User',
                     tabBarIcon: ({color}) => <UserRound size={ size } color={ color }/>,
@@ -64,9 +64,9 @@ export default function TabLayout() {
                 } }
             />
             <Tabs.Screen
-                name="two"
+                name="library"
                 options={ {
-                    title: 'Tab Two',
+                    title: 'Library',
                     tabBarIcon: ({color}) => <ListMusic size={ size } color={ color }/>,
                 } }
             />
