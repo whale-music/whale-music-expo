@@ -1,11 +1,12 @@
 import { SafeAreaView, StyleSheet, TouchableOpacity, VirtualizedList } from 'react-native';
-import { NativeButton, NativeText, NativeView } from '@/components/Themed';
+import { NativeText, NativeView } from '@/components/Themed';
 import { useEffect, useRef, useState } from 'react'
 import { getResource, Resource } from '@/api/resource'
 import { AudioLines } from 'lucide-react-native'
 import { useColorScheme } from '@/components/useColorScheme';
 import { Theme } from '@/constants/Theme'
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet'
+import AudioPlay from '@/components/AudioPlay'
 
 export default function App() {
     const theme = Theme()
@@ -78,8 +79,7 @@ export default function App() {
         } else {
             return (
                 <NativeView style={ [ {paddingTop: 20, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}, bgStyle ] }>
-                    <NativeText style={ {fontSize: 15} }>{ current?.name }</NativeText>
-                    <NativeButton style={ {backgroundColor: 'white', borderWidth: 1} } textStyle={ {color: 'black'} }>播放</NativeButton>
+                    <AudioPlay resource={ current } url={ current.url } style={ bgStyle }/>
                 </NativeView>
             )
         }
