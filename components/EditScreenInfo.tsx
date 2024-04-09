@@ -1,49 +1,58 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React from "react";
+import { StyleSheet } from "react-native";
 
-import { ExternalLink } from './ExternalLink';
-import { MonoText } from './StyledText';
-import { NativeText, NativeView } from './Themed';
+import { ExternalLink } from "./ExternalLink";
+import { MonoText } from "./StyledText";
+import { NativeText, NativeView } from "./Themed";
 
-import Colors from '@/constants/Colors';
+import Colors from "@/constants/Colors";
 
-export default function EditScreenInfo({path}: { path: string }) {
-    return (
-        <NativeView>
-            <NativeView style={ styles.getStartedContainer }>
-                <NativeText
-                    style={ styles.getStartedText }
-                    lightColor="rgba(0,0,0,0.8)"
-                    darkColor="rgba(255,255,255,0.8)">
-                    Open up the code for this screen:
-                </NativeText>
+export default function EditScreenInfo({ path }: { path: string }) {
+  return (
+    <NativeView>
+      <NativeView style={styles.getStartedContainer}>
+        <NativeText
+          style={styles.getStartedText}
+          lightColor="rgba(0,0,0,0.8)"
+          darkColor="rgba(255,255,255,0.8)"
+        >
+          Open up the code for this screen:
+        </NativeText>
 
-                <NativeView
-                    style={ [ styles.codeHighlightContainer, styles.homeScreenFilename ] }
-                    darkColor="rgba(255,255,255,0.05)"
-                    lightColor="rgba(0,0,0,0.05)">
-                    <MonoText>{ path }</MonoText>
-                </NativeView>
-
-                <NativeText
-                    style={ styles.getStartedText }
-                    lightColor="rgba(0,0,0,0.8)"
-                    darkColor="rgba(255,255,255,0.8)">
-                    Change any of the text, save the file, and your app will automatically update.
-                </NativeText>
-            </NativeView>
-
-            <NativeView style={ styles.helpContainer }>
-                <ExternalLink
-                    style={ styles.helpLink }
-                    href="https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet">
-                    <NativeText style={ styles.helpLinkText } lightColor={ Colors.light.secondaryIcon }>
-                        Tap here if your app doesn't automatically update after making changes
-                    </NativeText>
-                </ExternalLink>
-            </NativeView>
+        <NativeView
+          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
+          darkColor="rgba(255,255,255,0.05)"
+          lightColor="rgba(0,0,0,0.05)"
+        >
+          <MonoText>{path}</MonoText>
         </NativeView>
-    );
+
+        <NativeText
+          style={styles.getStartedText}
+          lightColor="rgba(0,0,0,0.8)"
+          darkColor="rgba(255,255,255,0.8)"
+        >
+          Change any of the text, save the file, and your app will automatically
+          update.
+        </NativeText>
+      </NativeView>
+
+      <NativeView style={styles.helpContainer}>
+        <ExternalLink
+          style={styles.helpLink}
+          href="https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet"
+        >
+          <NativeText
+            style={styles.helpLinkText}
+            lightColor={Colors.light.card}
+          >
+            Tap here if your app doesn't automatically update after making
+            changes
+          </NativeText>
+        </ExternalLink>
+      </NativeView>
+    </NativeView>
+  );
 }
 
 const styles = StyleSheet.create({

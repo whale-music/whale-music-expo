@@ -93,7 +93,7 @@ export default function App() {
           {({ pressed }) => (
             <EllipsisVertical
               size={25}
-              color={theme.icon}
+              color={theme.cardForeground}
               style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
             />
           )}

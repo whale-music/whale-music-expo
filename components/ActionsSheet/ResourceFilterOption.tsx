@@ -80,9 +80,11 @@ export default function ResourceFilterOptionActionsSheet(
     };
     const iconColor = (val?: FilterField) => {
       if (val) {
-        return filterField.includes(val) ? selectIconColor : theme.icon;
+        return filterField.includes(val)
+          ? selectIconColor
+          : theme.cardForeground;
       } else {
-        return theme.icon;
+        return theme.cardForeground;
       }
     };
     const filter = [
