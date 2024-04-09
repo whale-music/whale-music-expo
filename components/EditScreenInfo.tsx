@@ -37,7 +37,7 @@ export default function EditScreenInfo({path}: { path: string }) {
                 <ExternalLink
                     style={ styles.helpLink }
                     href="https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet">
-                    <NativeText style={ styles.helpLinkText } lightColor={ Colors.light.tabIconSelected }>
+                    <NativeText style={ styles.helpLinkText } lightColor={ Colors.light.secondaryIcon }>
                         Tap here if your app doesn't automatically update after making changes
                     </NativeText>
                 </ExternalLink>

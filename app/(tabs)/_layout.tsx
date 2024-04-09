@@ -22,7 +22,7 @@ export default function TabLayout() {
     return (
         <Tabs
             screenOptions={ {
-                tabBarActiveTintColor: theme.tabIconSelected,
+                tabBarActiveTintColor: theme.secondaryIcon,
                 // Disable the static render of the header on web
                 // to prevent a hydration error in React Navigation v6.
                 headerShown: useClientOnlyValue(false, true),
