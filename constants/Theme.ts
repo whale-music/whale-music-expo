@@ -9,6 +9,11 @@ export const Theme = (): ColorType => {
     return Colors[colorScheme ?? 'light'];
 }
 
+export const ThemeColor = (colorName: keyof ColorType) => {
+    const theme = useColorScheme() ?? 'light';
+    return Colors[theme][colorName];
+}
+
 /**
  * true:  light
  * false: dark
