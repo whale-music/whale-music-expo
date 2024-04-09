@@ -24,7 +24,7 @@ export default function ResourceFilterOptionActionsSheet(
     props?.payload?.value?.filterType ?? [],
   );
 
-  const backgroundColor = theme.secondary;
+  const backgroundColor = theme.background;
   const foreground = theme.foreground;
 
   function FilterGroupType({
@@ -41,14 +41,17 @@ export default function ResourceFilterOptionActionsSheet(
       container: {
         flexDirection: "column",
         width: "100%",
-        backgroundColor: "transparent",
+        backgroundColor: backgroundColor,
       },
       groupType: {
-        flexDirection: "row",
+        flexGrow: 1,
+        flexDirection: "column",
         alignItems: "center",
-        height: 46,
+        justifyContent: "center",
+        height: 70,
         borderRadius: 10,
-        backgroundColor: theme.background,
+        borderColor: theme.border,
+        borderWidth: 1,
         gap: 4,
         paddingHorizontal: 10,
       },
@@ -61,7 +64,7 @@ export default function ResourceFilterOptionActionsSheet(
         flexDirection: "column",
         justifyContent: "space-around",
         gap: 10,
-        backgroundColor: theme.secondary,
+        backgroundColor: backgroundColor,
       },
     });
 
@@ -78,13 +81,11 @@ export default function ResourceFilterOptionActionsSheet(
       }
       setFilterField([...filterField]);
     };
-    const iconColor = (val?: FilterField) => {
+    const activationColor = (val?: FilterField) => {
       if (val) {
-        return filterField.includes(val)
-          ? selectIconColor
-          : theme.cardForeground;
+        return filterField.includes(val) ? selectIconColor : theme.border;
       } else {
-        return theme.cardForeground;
+        return theme.border;
       }
     };
     const filter = [
@@ -92,9 +93,12 @@ export default function ResourceFilterOptionActionsSheet(
         type: "audio" as FilterField,
         content: (type?: FilterField) => (
           <>
-            <AudioLines size={28} color={iconColor(type)} />
+            <AudioLines size={28} color={activationColor(type)} />
             <NativeText
-              style={[styles.groupSelectTitle, { color: iconColor(type) }]}
+              style={[
+                styles.groupSelectTitle,
+                { color: activationColor(type) },
+              ]}
             >
               {type}
             </NativeText>
@@ -106,9 +110,12 @@ export default function ResourceFilterOptionActionsSheet(
         type: "image" as FilterField,
         content: (type?: FilterField) => (
           <>
-            <Image size={28} color={iconColor(type)} />
+            <Image size={28} color={activationColor(type)} />
             <NativeText
-              style={[styles.groupSelectTitle, { color: iconColor(type) }]}
+              style={[
+                styles.groupSelectTitle,
+                { color: activationColor(type) },
+              ]}
             >
               {type}
             </NativeText>
@@ -120,9 +127,12 @@ export default function ResourceFilterOptionActionsSheet(
         type: "video" as FilterField,
         content: (type?: FilterField) => (
           <>
-            <FileVideo size={28} color={iconColor(type)} />
+            <FileVideo size={28} color={activationColor(type)} />
             <NativeText
-              style={[styles.groupSelectTitle, { color: iconColor(type) }]}
+              style={[
+                styles.groupSelectTitle,
+                { color: activationColor(type) },
+              ]}
             >
               {type}
             </NativeText>
@@ -144,7 +154,7 @@ export default function ResourceFilterOptionActionsSheet(
       return (
         <>
           <TouchableOpacity
-            style={styles.groupType}
+            style={[styles.groupType, { borderColor: activationColor(type) }]}
             onPress={() => onChange(type)}
           >
             {content(type)}
@@ -250,8 +260,9 @@ export default function ResourceFilterOptionActionsSheet(
             <NativeView
               style={{
                 backgroundColor: "transparent",
-                flexDirection: "column",
-                gap: 2,
+                flexDirection: "row",
+                justifyContent: "space-around",
+                gap: 6,
               }}
             >
               {filter.map((v) => (
