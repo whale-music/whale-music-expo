@@ -3,8 +3,10 @@ import { NativeButton, NativeText, NativeView } from "@/components/Themed";
 import { router, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import { getUserInfo, UserInfoRes } from "@/api/user";
+import { Theme } from "@/constants/Theme";
 
 export default function TabOneScreen() {
+  const theme = Theme();
   const navigation = useNavigation();
 
   const [userInfo, setUserInfo] = useState<UserInfoRes>();
@@ -41,7 +43,10 @@ export default function TabOneScreen() {
     );
   }
   return (
-    <ScrollView style={{ flex: 1 }} contentInsetAdjustmentBehavior="automatic">
+    <ScrollView
+      style={{ flex: 1, backgroundColor: theme.background }}
+      contentInsetAdjustmentBehavior="automatic"
+    >
       <NativeView style={styles.container}>
         <NativeView
           style={{
