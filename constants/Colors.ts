@@ -25,14 +25,14 @@ type ThemeColor = {
     secondaryIcon: string;
 }
 // 定义 Colors 对象类型，它允许定义多种主题
-// type Colors = {
-//     [key: string]: Partial<ThemeColor>;
-// }
-
 type Colors = {
-    light: Partial<ThemeColor>;
-    dark: Partial<ThemeColor>;
+    [key: string]: Partial<ThemeColor>;
 }
+
+// type Colors = {
+//     light: Partial<ThemeColor>;
+//     dark: Partial<ThemeColor>;
+// }
 
 const Colors: Colors = {
     light: {
@@ -42,6 +42,7 @@ const Colors: Colors = {
         secondaryBackground: '#f2f2f2',
         icon: '#cccccc',
         secondaryIcon: '#6969FF',
+        border: '#19181b'
     },
     dark: {
         primary: '#6969FF',
@@ -50,6 +51,7 @@ const Colors: Colors = {
         secondaryBackground: '#333333',
         icon: '#cccccc',
         secondaryIcon: '#ffffff',
+        border: '#fafaf7'
     },
 }
 export default Colors;
