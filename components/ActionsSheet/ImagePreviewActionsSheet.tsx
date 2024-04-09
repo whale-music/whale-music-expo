@@ -9,7 +9,7 @@ export default function VideoPreviewActionsSheet(
   const theme = Theme();
 
   const resource = props.payload?.value;
-  const bgStyle = { backgroundColor: theme.secondaryBackground };
+  const bgStyle = { backgroundColor: theme.secondary };
 
   function AudioPreview() {
     if (resource && resource.url !== null && resource.url.trim().length > 0) {
@@ -47,7 +47,7 @@ export default function VideoPreviewActionsSheet(
         containerStyle={{
           borderTopLeftRadius: 25,
           borderTopRightRadius: 25,
-          backgroundColor: theme.secondaryBackground,
+          backgroundColor: theme.secondary,
         }}
         indicatorStyle={{
           width: 100,
@@ -56,9 +56,7 @@ export default function VideoPreviewActionsSheet(
         }}
         gestureEnabled={true}
       >
-        <NativeView
-          style={{ height: 200, backgroundColor: theme.secondaryBackground }}
-        >
+        <NativeView style={{ height: 200, backgroundColor: theme.secondary }}>
           <NativeView
             style={[
               {

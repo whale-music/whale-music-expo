@@ -24,7 +24,7 @@ export default function ResourceFilterOptionActionsSheet(
     props?.payload?.value?.filterType ?? [],
   );
 
-  const backgroundColor = theme.secondaryBackground;
+  const backgroundColor = theme.secondary;
   const foreground = theme.foreground;
 
   function FilterGroupType({
@@ -61,7 +61,7 @@ export default function ResourceFilterOptionActionsSheet(
         flexDirection: "column",
         justifyContent: "space-around",
         gap: 10,
-        backgroundColor: theme.secondaryBackground,
+        backgroundColor: theme.secondary,
       },
     });
 
@@ -235,7 +235,7 @@ export default function ResourceFilterOptionActionsSheet(
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: theme.secondaryBackground,
+            backgroundColor: theme.secondary,
           },
         ]}
       >
