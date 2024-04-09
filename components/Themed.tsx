@@ -3,12 +3,20 @@
  * https://docs.expo.io/guides/color-schemes/
  */
 
-import { StyleProp, StyleSheet, Text as DefaultText, TextInput, TextStyle, TouchableOpacity, View as DefaultView } from 'react-native';
+import {
+    StyleProp,
+    StyleSheet,
+    Text as DefaultText,
+    TextInput,
+    TextStyle,
+    TouchableOpacity,
+    View as DefaultView,
+} from 'react-native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from './useColorScheme';
-import { ReactNode } from 'react'
-import { Theme, ThemeMode } from '@/constants/Theme'
+import { ReactNode } from 'react';
+import { Theme, ThemeMode } from '@/constants/Theme';
 
 type ThemeProps = {
     lightColor?: string;
@@ -35,61 +43,70 @@ export function useThemeColor(
 }
 
 export function NativeText(props: TextProps) {
-    const {style, lightColor, darkColor, ...otherProps} = props;
-    const color = Theme().foreground
+    const { style, lightColor, darkColor, ...otherProps } = props;
+    const color = Theme().foreground;
 
-    return <DefaultText style={ [ {color}, style ] } { ...otherProps } />;
+    return <DefaultText style={[{ color }, style]} {...otherProps} />;
 }
 
 export function NativeView(props: ViewProps) {
-    const {style, lightColor, darkColor, ...otherProps} = props;
-    const themeColor = Theme()
+    const { style, lightColor, darkColor, ...otherProps } = props;
+    const themeColor = Theme();
 
-    return <DefaultView style={ [ {backgroundColor: themeColor.background}, style ] } { ...otherProps } />;
+    return (
+        <DefaultView style={[{ backgroundColor: themeColor.background }, style]} {...otherProps} />
+    );
 }
 
 export function NativeInput(props: TextInputProps) {
-    const {style, lightColor, darkColor, placeholderTextColor, ...otherProps} = props;
-    const themeColor = Theme()
+    const { style, lightColor, darkColor, placeholderTextColor, ...otherProps } = props;
+    const themeColor = Theme();
 
     const rgba = ThemeMode() ? 'rgb(241, 242, 242)' : 'rgba(20, 20, 20, 0.8)';
     return (
         <TextInput
-            { ...props }
+            {...props}
             placeholderTextColor="gray"
-            style={ [
+            style={[
                 {
                     fontSize: 16,
                     color: themeColor.foreground,
                     backgroundColor: rgba,
                     borderRadius: 10,
                     padding: 10,
-                    borderColor: "transparent"
+                    borderColor: 'transparent',
                 },
-                style
-            ] }
+                style,
+            ]}
         />
-    )
+    );
 }
 
-
-export function NativeButton({icon, textStyle, children, ...props}: { icon?: ReactNode, textStyle?: StyleProp<TextStyle>, children: ReactNode } & TouchableOpacityProps) {
-    const {style, lightColor, darkColor, ...otherProps} = props;
-    const themeColor = Theme()
+export function NativeButton({
+    icon,
+    textStyle,
+    children,
+    ...props
+}: {
+    icon?: ReactNode;
+    textStyle?: StyleProp<TextStyle>;
+    children: ReactNode;
+} & TouchableOpacityProps) {
+    const { style, lightColor, darkColor, ...otherProps } = props;
+    const themeColor = Theme();
 
     return (
-        <TouchableOpacity
-            { ...props }
-            style={ [ {borderWidth: 1}, styles.button, style ] }
-        >
-            { icon }
-            <NativeText style={ [ styles.buttonText, {color: themeColor.foreground}, textStyle ] } numberOfLines={ 1 } ellipsizeMode='tail'>
-                { children }
+        <TouchableOpacity {...props} style={[{ borderWidth: 1 }, styles.button, style]}>
+            {icon}
+            <NativeText
+                style={[styles.buttonText, { color: themeColor.foreground }, textStyle]}
+                numberOfLines={1}
+                ellipsizeMode="tail">
+                {children}
             </NativeText>
         </TouchableOpacity>
-    )
+    );
 }
-
 
 const styles = StyleSheet.create({
     button: {
@@ -104,6 +121,6 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 15,
-        fontWeight: "bold"
+        fontWeight: 'bold',
     },
-})
+});

@@ -1,4 +1,4 @@
-import { hexValue, parseColor, withShade, withTint } from "./utils";
+import { hexValue, parseColor, withShade, withTint } from './utils';
 
 export const _variants = {
     50: withTint(0.95),
@@ -18,7 +18,7 @@ export function getColors(color: string, variants = _variants) {
     const colors: Record<string, string> = {};
     const components = parseColor(color);
 
-    for (const [ name, fn ] of Object.entries(variants)) {
+    for (const [name, fn] of Object.entries(variants)) {
         colors[name] = hexValue(fn(components));
     }
 

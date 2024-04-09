@@ -1,4 +1,4 @@
-import { request } from '@/util/http/http'
+import { request } from '@/util/http/http';
 
 export interface Resource {
     type: string;
@@ -16,8 +16,8 @@ export interface Resource {
 }
 
 export const getResource = async (refresh: boolean = false) => {
-    return request.post<Resource[]>(`/admin/resource/list`, JSON.stringify({refresh: refresh}), {
-        "accept": "application/json",
-        "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
-    })
-}
+    return request.post<Resource[]>(`/admin/resource/list`, JSON.stringify({ refresh: refresh }), {
+        accept: 'application/json',
+        'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8',
+    });
+};

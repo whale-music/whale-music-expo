@@ -6,9 +6,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
 import { useColorScheme } from '@/components/useColorScheme';
-import { RootSiblingParent } from 'react-native-root-siblings'
+import { RootSiblingParent } from 'react-native-root-siblings';
 import { SheetProvider } from 'react-native-actions-sheet';
-import { Theme } from '@/constants/Theme'
+import { Theme } from '@/constants/Theme';
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -24,7 +24,7 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-    const [ loaded, error ] = useFonts({
+    const [loaded, error] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         ...FontAwesome.font,
     });
@@ -34,34 +34,40 @@ export default function RootLayout() {
         if (error) {
             throw error;
         }
-    }, [ error ]);
+    }, [error]);
 
     useEffect(() => {
         if (loaded) {
             SplashScreen.hideAsync();
         }
-    }, [ loaded ]);
+    }, [loaded]);
 
     if (!loaded) {
         return null;
     }
 
-    return <RootLayoutNav/>;
+    return <RootLayoutNav />;
 }
 
 function RootLayoutNav() {
     const colorScheme = useColorScheme();
-    const theme = Theme()
+    const theme = Theme();
 
     return (
         <RootSiblingParent>
             <SheetProvider>
-                <ThemeProvider value={ colorScheme === 'dark' ? DarkTheme : DefaultTheme }>
+                <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
                     <Stack>
-                        <Stack.Screen name="(tabs)" options={ {headerShown: false, headerStyle: {backgroundColor: theme.background}} }/>
-                        <Stack.Screen name="modal" options={ {presentation: 'modal'} }/>
-                        <Stack.Screen name="setting" options={ {presentation: 'modal'} }/>
-                        <Stack.Screen name="login" options={ {headerShown: false} }/>
+                        <Stack.Screen
+                            name="(tabs)"
+                            options={{
+                                headerShown: false,
+                                headerStyle: { backgroundColor: theme.background },
+                            }}
+                        />
+                        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+                        <Stack.Screen name="setting" options={{ presentation: 'modal' }} />
+                        <Stack.Screen name="login" options={{ headerShown: false }} />
                     </Stack>
                 </ThemeProvider>
             </SheetProvider>
