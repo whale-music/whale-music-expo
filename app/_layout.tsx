@@ -103,6 +103,7 @@ function RootLayoutNav() {
                             options={{
                                 title: "",
                                 headerTransparent: true,
+                                headerBackTitleVisible: false,
                             }}
                         />
                     </Stack>
