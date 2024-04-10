@@ -1,33 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
-import { NativeButton, NativeText, NativeView } from '@/components/Themed';
-import { removeUserStore } from '@/store/user';
-import Toast from 'react-native-root-toast';
+import { StatusBar } from "expo-status-bar";
+import { Platform, StyleSheet } from "react-native";
+import { NativeButton, NativeView } from "@/components/Themed";
+import { removeUserStore } from "@/store/user";
+import Toast from "react-native-root-toast";
 
 export default function ModalScreen() {
     async function destroyUserCache() {
         await removeUserStore();
-        Toast.show('清除成功');
+        Toast.show("清除成功");
     }
 
     return (
         <NativeView style={styles.container}>
             {/* Use a light status bar on iOS to account for the black space above the modal */}
-            <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+            <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
 
             <NativeView
                 style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                     padding: 5,
-                }}>
-                <NativeText style={{ marginLeft: 10, fontSize: 20 }}>清除缓存</NativeText>
+                    backgroundColor: "transparent",
+                }}
+            >
                 <NativeButton
-                    style={{ backgroundColor: 'red', borderWidth: 0, margin: 0 }}
-                    textStyle={{ color: 'white' }}
-                    onPress={destroyUserCache}>
-                    清除
+                    style={{ backgroundColor: "red", width: "90%", borderWidth: 0, paddingVertical: 10 }}
+                    textStyle={{ color: "white" }}
+                    onPress={destroyUserCache}
+                >
+                    退出登录
                 </NativeButton>
             </NativeView>
         </NativeView>
@@ -35,14 +37,16 @@ export default function ModalScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+        backgroundColor: "transparent",
+    },
     title: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     separator: {
         marginVertical: 30,
         height: 1,
-        width: '80%',
+        width: "80%",
     },
 });
