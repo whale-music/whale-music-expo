@@ -3,7 +3,7 @@ import { NativeText, NativeView } from "@/components/Themed";
 import { Theme } from "@/constants/Theme";
 import { ChevronDown } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
-import { useNavigation } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import { getUserStoreData } from "@/store/user";
 import { getUserPlaylistAll, PlayListAllRes } from "@/api/playlist";
 
@@ -61,6 +61,14 @@ export default function Library() {
                     opacity: pressed ? 0.8 : 1,
                 },
             ]}
+            onPress={() => {
+                router.push({
+                    pathname: "/playlist-detail",
+                    params: {
+                        id: playlist.id,
+                    },
+                });
+            }}
         >
             <Image source={{ uri: playlist.picUrl }} width={70} style={{ aspectRatio: 1 }} borderRadius={10} />
             <NativeText style={{ fontSize: 22, fontWeight: "600" }}>{playlist.playListName}</NativeText>

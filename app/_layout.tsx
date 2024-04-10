@@ -98,6 +98,13 @@ function RootLayoutNav() {
                                 headerShown: false,
                             }}
                         />
+                        <Stack.Screen
+                            name="playlist-detail"
+                            options={{
+                                title: "",
+                                headerTransparent: true,
+                            }}
+                        />
                     </Stack>
                 </ThemeProvider>
             </SheetProvider>
