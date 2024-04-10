@@ -5,6 +5,7 @@ import { ActivityIndicator, FlatList, Image, ImageBackground, StyleSheet, View }
 import { CollectInfoRes, getPlayListInfo, getPlaylistMusicPage, PlaylistMusicPageReq, PlaylistMusicPageRes } from "@/api/playlist";
 import { Theme } from "@/constants/Theme";
 import { Ellipsis } from "lucide-react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function PlaylistDetail() {
     const route = useRoute();
@@ -73,6 +74,12 @@ export default function PlaylistDetail() {
                             blurRadius={50}
                             style={[{ flex: 1, justifyContent: "flex-end", alignItems: "center", height: 280 }, styles.imageOverlay]}
                         />
+                        <LinearGradient
+                            // Background Linear Gradient
+                            colors={["transparent", theme.background]}
+                            locations={[0, 0.8]}
+                            style={styles.imageOverlay}
+                        />
                         <NativeView style={styles.imageOverlay} />
                         <NativeView style={[styles.imageContainer, { backgroundColor: "transparent" }]}>
                             <Image
@@ -116,11 +123,15 @@ function MusicItem({ value }: { value: PlaylistMusicPageRes }) {
     const theme = Theme();
     return (
         <>
-            <NativeView style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                <NativeView style={{ flexDirection: "row", alignItems: "center", paddingHorizontal: 20, padding: 5, gap: 10, height: 70 }}>
+            <NativeView style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
+                <NativeView
+                    style={{ flexDirection: "row", width: "90%", alignItems: "center", paddingHorizontal: 20, padding: 5, gap: 10, height: 70 }}
+                >
                     <Image source={{ uri: value.picUrl }} width={60} style={{ aspectRatio: 1 }} />
-                    <NativeView style={{ flexDirection: "column", height: "100%", justifyContent: "space-around" }}>
-                        <NativeText style={{ fontSize: 16, fontWeight: "500" }}>{value.musicName}</NativeText>
+                    <NativeView style={{ flex: 1, flexDirection: "column", height: "100%", justifyContent: "space-around" }}>
+                        <NativeText style={{ fontSize: 16, fontWeight: "500", width: "100%" }} numberOfLines={1} ellipsizeMode="tail">
+                            {value.musicName}
+                        </NativeText>
                         <NativeText style={{ fontSize: 13, fontWeight: "400", opacity: 0.8 }}>{value.artistNames}</NativeText>
                     </NativeView>
                 </NativeView>
@@ -159,8 +170,8 @@ const styles = StyleSheet.create({
     },
     imageOverlay: {
         ...StyleSheet.absoluteFillObject,
-        height: 280,
-        backgroundColor: "rgba(0,0,0,0.3)",
+        height: 300,
+        backgroundColor: "rgba(0,0,0,0.14)",
     },
     footer: {
         padding: 10,
