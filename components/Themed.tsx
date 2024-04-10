@@ -8,7 +8,7 @@ import { StyleProp, StyleSheet, Text as DefaultText, TextInput, TextStyle, Touch
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "./useColorScheme";
 import { ReactNode } from "react";
-import { Theme, ThemeMode } from "@/constants/Theme";
+import { Theme } from "@/constants/Theme";
 
 type ThemeProps = {
     lightColor?: string;
@@ -49,7 +49,6 @@ export function NativeInput(props: TextInputProps) {
     const { style, lightColor, darkColor, placeholderTextColor, ...otherProps } = props;
     const themeColor = Theme();
 
-    const rgba = ThemeMode() ? "rgb(241, 242, 242)" : "rgba(20, 20, 20, 0.8)";
     return (
         <TextInput
             {...props}
