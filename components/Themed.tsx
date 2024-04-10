@@ -58,10 +58,11 @@ export function NativeInput(props: TextInputProps) {
                 {
                     fontSize: 16,
                     color: themeColor.accentForeground,
-                    backgroundColor: themeColor.background,
+                    backgroundColor: themeColor.card,
                     borderRadius: 10,
                     padding: 10,
-                    borderColor: "transparent",
+                    borderWidth: 1,
+                    borderColor: themeColor.border,
                 },
                 style,
             ]}
