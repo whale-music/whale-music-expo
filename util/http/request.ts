@@ -1,10 +1,10 @@
-import { getServerUrlSettingStoreData } from '@/store/setting';
-import { getUserToken } from '@/store/user';
-import Toast from 'react-native-root-toast';
-import { router } from 'expo-router';
+import { getServerUrlSettingStoreData } from "@/store/setting";
+import { getUserToken } from "@/store/user";
+import Toast from "react-native-root-toast";
+import { router } from "expo-router";
 
 export const request = async <T>(
-    method: 'get' | 'post',
+    method: "get" | "post",
     url: string,
     body?: BodyInit,
     headers?: HeadersInit,
@@ -16,12 +16,11 @@ export const request = async <T>(
 
     let token = await getUserToken();
     const _headers = {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
         ...headers,
     };
-    console.log(url, 'url');
-    console.log(token, 'token');
+    console.debug(url, "url");
 
     let controller = new AbortController();
     let id = setTimeout(() => controller.abort(), timeout);
@@ -42,9 +41,9 @@ export const request = async <T>(
     const json = await r.json();
     if (json?.code != 200) {
         if (json?.code == 20001) {
-            router.replace('/login');
-            Toast.show('please login');
-            throw new Error('Token expired');
+            router.replace("/login");
+            Toast.show("please login");
+            throw new Error("Token expired");
         }
         const s = `service error code ${json?.code}, msg: ${json?.message}`;
         Toast.show(s, {
@@ -52,23 +51,12 @@ export const request = async <T>(
         });
         throw new Error(s);
     }
-    return json['data'];
+    return json["data"];
 };
 
-export const get = <T>(
-    url: string,
-    header?: HeadersInit,
-    timeout?: number,
-    prop = {}
-): Promise<T> => {
-    return request('get', url, undefined, header, timeout, prop);
+export const get = <T>(url: string, header?: HeadersInit, timeout?: number, prop = {}): Promise<T> => {
+    return request("get", url, undefined, header, timeout, prop);
 };
-export const post = <T>(
-    url: string,
-    body?: BodyInit,
-    header?: HeadersInit,
-    timeout?: number,
-    prop = {}
-): Promise<T> => {
-    return request('post', url, body, header, timeout, prop);
+export const post = <T>(url: string, body?: BodyInit, header?: HeadersInit, timeout?: number, prop = {}): Promise<T> => {
+    return request("post", url, body, header, timeout, prop);
 };
