@@ -10,6 +10,7 @@ import { RootSiblingParent } from "react-native-root-siblings";
 import { SheetProvider } from "react-native-actions-sheet";
 import { Theme } from "@/constants/Theme";
 import Colors from "@/constants/Colors";
+import MusicPlayerBottomBar from "@/components/MusicPlayerBottomBar";
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -83,30 +84,32 @@ function RootLayoutNav() {
         <RootSiblingParent>
             <SheetProvider>
                 <ThemeProvider value={colorScheme === "dark" ? darkTheme : lightTheme}>
-                    <Stack>
-                        <Stack.Screen
-                            name="(tabs)"
-                            options={{
-                                headerShown: false,
-                            }}
-                        />
-                        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-                        <Stack.Screen name="setting" options={{ presentation: "modal" }} />
-                        <Stack.Screen
-                            name="login"
-                            options={{
-                                headerShown: false,
-                            }}
-                        />
-                        <Stack.Screen
-                            name="playlist-detail"
-                            options={{
-                                title: "",
-                                headerTransparent: true,
-                                headerBackTitleVisible: false,
-                            }}
-                        />
-                    </Stack>
+                    <MusicPlayerBottomBar>
+                        <Stack>
+                            <Stack.Screen
+                                name="(tabs)"
+                                options={{
+                                    headerShown: false,
+                                }}
+                            />
+                            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+                            <Stack.Screen name="setting" options={{ presentation: "modal" }} />
+                            <Stack.Screen
+                                name="login"
+                                options={{
+                                    headerShown: false,
+                                }}
+                            />
+                            <Stack.Screen
+                                name="playlist-detail"
+                                options={{
+                                    title: "",
+                                    headerTransparent: true,
+                                    headerBackTitleVisible: false,
+                                }}
+                            />
+                        </Stack>
+                    </MusicPlayerBottomBar>
                 </ThemeProvider>
             </SheetProvider>
         </RootSiblingParent>
