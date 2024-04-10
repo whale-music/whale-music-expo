@@ -3,36 +3,25 @@
  * https://docs.expo.io/guides/color-schemes/
  */
 
-import {
-    StyleProp,
-    StyleSheet,
-    Text as DefaultText,
-    TextInput,
-    TextStyle,
-    TouchableOpacity,
-    View as DefaultView,
-} from 'react-native';
+import { StyleProp, StyleSheet, Text as DefaultText, TextInput, TextStyle, TouchableOpacity, View as DefaultView } from "react-native";
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from './useColorScheme';
-import { ReactNode } from 'react';
-import { Theme, ThemeMode } from '@/constants/Theme';
+import Colors from "@/constants/Colors";
+import { useColorScheme } from "./useColorScheme";
+import { ReactNode } from "react";
+import { Theme, ThemeMode } from "@/constants/Theme";
 
 type ThemeProps = {
     lightColor?: string;
     darkColor?: string;
 };
 
-export type TextProps = ThemeProps & DefaultText['props'];
-export type ViewProps = ThemeProps & DefaultView['props'];
-export type TextInputProps = ThemeProps & TextInput['props'];
-export type TouchableOpacityProps = ThemeProps & TouchableOpacity['props'];
+export type TextProps = ThemeProps & DefaultText["props"];
+export type ViewProps = ThemeProps & DefaultView["props"];
+export type TextInputProps = ThemeProps & TextInput["props"];
+export type TouchableOpacityProps = ThemeProps & TouchableOpacity["props"];
 
-export function useThemeColor(
-    props: { light?: string; dark?: string },
-    colorName: keyof typeof Colors.light & keyof typeof Colors.dark
-) {
-    const theme = useColorScheme() ?? 'light';
+export function useThemeColor(props: { light?: string; dark?: string }, colorName: keyof typeof Colors.light & keyof typeof Colors.dark) {
+    const theme = useColorScheme() ?? "light";
     const colorFromProps = props[theme];
 
     if (colorFromProps) {
@@ -44,7 +33,7 @@ export function useThemeColor(
 
 export function NativeText(props: TextProps) {
     const { style, lightColor, darkColor, ...otherProps } = props;
-    const color = Theme().foreground;
+    const color = Theme().accentForeground;
 
     return <DefaultText style={[{ color }, style]} {...otherProps} />;
 }
@@ -53,16 +42,14 @@ export function NativeView(props: ViewProps) {
     const { style, lightColor, darkColor, ...otherProps } = props;
     const themeColor = Theme();
 
-    return (
-        <DefaultView style={[{ backgroundColor: themeColor.background }, style]} {...otherProps} />
-    );
+    return <DefaultView style={[{ backgroundColor: themeColor.background }, style]} {...otherProps} />;
 }
 
 export function NativeInput(props: TextInputProps) {
     const { style, lightColor, darkColor, placeholderTextColor, ...otherProps } = props;
     const themeColor = Theme();
 
-    const rgba = ThemeMode() ? 'rgb(241, 242, 242)' : 'rgba(20, 20, 20, 0.8)';
+    const rgba = ThemeMode() ? "rgb(241, 242, 242)" : "rgba(20, 20, 20, 0.8)";
     return (
         <TextInput
             {...props}
@@ -70,11 +57,11 @@ export function NativeInput(props: TextInputProps) {
             style={[
                 {
                     fontSize: 16,
-                    color: themeColor.foreground,
-                    backgroundColor: rgba,
+                    color: themeColor.accentForeground,
+                    backgroundColor: themeColor.background,
                     borderRadius: 10,
                     padding: 10,
-                    borderColor: 'transparent',
+                    borderColor: "transparent",
                 },
                 style,
             ]}
@@ -98,10 +85,7 @@ export function NativeButton({
     return (
         <TouchableOpacity {...props} style={[{ borderWidth: 1 }, styles.button, style]}>
             {icon}
-            <NativeText
-                style={[styles.buttonText, { color: themeColor.foreground }, textStyle]}
-                numberOfLines={1}
-                ellipsizeMode="tail">
+            <NativeText style={[styles.buttonText, { color: themeColor.foreground }, textStyle]} numberOfLines={1} ellipsizeMode="tail">
                 {children}
             </NativeText>
         </TouchableOpacity>
@@ -113,14 +97,14 @@ const styles = StyleSheet.create({
         margin: 16,
         padding: 11,
         borderRadius: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "row",
         gap: 10,
         paddingHorizontal: 32,
     },
     buttonText: {
         fontSize: 15,
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
 });
