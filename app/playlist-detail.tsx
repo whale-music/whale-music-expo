@@ -1,13 +1,16 @@
 import { NativeButton, NativeText, NativeView } from "@/components/Themed";
 import { useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Image, ImageBackground, StyleSheet, View } from "react-native";
+import { ActivityIndicator, FlatList, Image, ImageBackground, StyleSheet, TouchableOpacity, View } from "react-native";
 import { CollectInfoRes, getPlayListInfo, getPlaylistMusicPage, PlaylistMusicPageReq, PlaylistMusicPageRes } from "@/api/playlist";
 import { Theme } from "@/constants/Theme";
-import { Ellipsis } from "lucide-react-native";
+import { Ellipsis, EllipsisVertical } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "expo-router";
 
 export default function PlaylistDetail() {
+    const navigation = useNavigation();
+
     const route = useRoute();
     const theme = Theme();
     const { id } = route.params as { id: number };
@@ -16,6 +19,18 @@ export default function PlaylistDetail() {
     const [playlistInfo, setPlaylistInfo] = useState<CollectInfoRes>();
     const [loading, setLoading] = useState(false);
     const [isListEnd, setIsListEnd] = useState(false);
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <>
+                    <TouchableOpacity>
+                        <EllipsisVertical size={28} color={theme.accentForeground} />
+                    </TouchableOpacity>
+                </>
+            ),
+        });
+    }, []);
 
     useEffect(() => {
         (async function () {
