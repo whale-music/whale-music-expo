@@ -11,6 +11,7 @@ import { SheetProvider } from "react-native-actions-sheet";
 import { Theme } from "@/constants/Theme";
 import Colors from "@/constants/Colors";
 import MusicPlayerBottomBar from "@/components/MusicPlayerBottomBar";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -52,6 +53,9 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+    // Create a client
+    const queryClient = new QueryClient();
+
     const colorScheme = useColorScheme();
     const themeColor = Theme();
 
@@ -81,80 +85,82 @@ function RootLayoutNav() {
         },
     };
     return (
-        <RootSiblingParent>
-            <SheetProvider>
-                <ThemeProvider value={colorScheme === "dark" ? darkTheme : lightTheme}>
-                    <MusicPlayerBottomBar>
-                        <Stack>
-                            <Stack.Screen
-                                name="(tabs)"
-                                options={{
-                                    headerShown: false,
-                                }}
-                            />
-                            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-                            <Stack.Screen name="setting" options={{ presentation: "modal" }} />
-                            <Stack.Screen
-                                name="login"
-                                options={{
-                                    headerShown: false,
-                                }}
-                            />
-                            <Stack.Screen
-                                name="file-resource-storage"
-                                options={{
-                                    title: "资源",
-                                    headerShown: true,
-                                }}
-                            />
-                            <Stack.Screen
-                                name="playlist-detail"
-                                options={{
-                                    title: "",
-                                    headerTransparent: true,
-                                    headerBackTitleVisible: false,
-                                }}
-                            />
-                            <Stack.Screen
-                                name="music-detail"
-                                options={{
-                                    title: "Music",
-                                    headerLargeTitleShadowVisible: false,
-                                    headerBackTitleVisible: false,
-                                    headerStyle: {
-                                        backgroundColor: themeColor.background,
-                                    },
-                                    headerShadowVisible: false,
-                                }}
-                            />
-                            <Stack.Screen
-                                name="artist-detail"
-                                options={{
-                                    title: "Artist",
-                                    headerLargeTitleShadowVisible: false,
-                                    headerBackTitleVisible: false,
-                                    headerStyle: {
-                                        backgroundColor: themeColor.background,
-                                    },
-                                    headerShadowVisible: false,
-                                }}
-                            />
-                            <Stack.Screen
-                                name="album-detail"
-                                options={{
-                                    title: "Album",
-                                    headerLargeTitleShadowVisible: false,
-                                    headerBackTitleVisible: false,
-                                    headerStyle: {
-                                        backgroundColor: themeColor.background,
-                                    },
-                                    headerShadowVisible: false,
-                                }}
-                            />
-                        </Stack>
-                    </MusicPlayerBottomBar>
-                </ThemeProvider>
-            </SheetProvider>
-        </RootSiblingParent>
+        <QueryClientProvider client={queryClient}>
+            <RootSiblingParent>
+                <SheetProvider>
+                    <ThemeProvider value={colorScheme === "dark" ? darkTheme : lightTheme}>
+                        <MusicPlayerBottomBar>
+                            <Stack>
+                                <Stack.Screen
+                                    name="(tabs)"
+                                    options={{
+                                        headerShown: false,
+                                    }}
+                                />
+                                <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+                                <Stack.Screen name="setting" options={{ presentation: "modal" }} />
+                                <Stack.Screen
+                                    name="login"
+                                    options={{
+                                        headerShown: false,
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="file-resource-storage"
+                                    options={{
+                                        title: "资源",
+                                        headerShown: true,
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="playlist-detail"
+                                    options={{
+                                        title: "",
+                                        headerTransparent: true,
+                                        headerBackTitleVisible: false,
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="music-detail"
+                                    options={{
+                                        title: "Music",
+                                        headerLargeTitleShadowVisible: false,
+                                        headerBackTitleVisible: false,
+                                        headerStyle: {
+                                            backgroundColor: themeColor.background,
+                                        },
+                                        headerShadowVisible: false,
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="artist-detail"
+                                    options={{
+                                        title: "Artist",
+                                        headerLargeTitleShadowVisible: false,
+                                        headerBackTitleVisible: false,
+                                        headerStyle: {
+                                            backgroundColor: themeColor.background,
+                                        },
+                                        headerShadowVisible: false,
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="album-detail"
+                                    options={{
+                                        title: "Album",
+                                        headerLargeTitleShadowVisible: false,
+                                        headerBackTitleVisible: false,
+                                        headerStyle: {
+                                            backgroundColor: themeColor.background,
+                                        },
+                                        headerShadowVisible: false,
+                                    }}
+                                />
+                            </Stack>
+                        </MusicPlayerBottomBar>
+                    </ThemeProvider>
+                </SheetProvider>
+            </RootSiblingParent>
+        </QueryClientProvider>
     );
 }

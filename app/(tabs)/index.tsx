@@ -1,4 +1,4 @@
-import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Image, Pressable, RefreshControl, ScrollView, StyleSheet, View } from "react-native";
 import { NativeButton, NativeText, NativeView } from "@/components/Themed";
 import { router, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -6,17 +6,49 @@ import { getUserInfo, UserInfoRes } from "@/api/user";
 import { Theme } from "@/constants/Theme";
 import { ChevronRight } from "lucide-react-native";
 import { AnimatableNumericValue } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
-import { getNewAlbums, getNewArtist, getNewMusic, NewAlbumRes, NewArtistRes, NewMusicRes } from "@/api/recommend";
+import { getNewAlbums, getNewArtist, getNewMusic } from "@/api/recommend";
+import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
+
+const expirationTime = 24 * 60 * 60 * 1000;
 
 export default function TabOneScreen() {
     const theme = Theme();
     const navigation = useNavigation();
+    // Access the client
+    const queryClient = useQueryClient();
 
     const [userInfo, setUserInfo] = useState<UserInfoRes>();
+    const queriesResults = useQueries({
+        queries: [
+            { queryKey: ["music", 1], queryFn: getNewMusic, staleTime: expirationTime },
+            { queryKey: ["artist", 2], queryFn: getNewArtist, staleTime: expirationTime },
+            { queryKey: ["album", 2], queryFn: getNewAlbums, staleTime: expirationTime },
+        ],
+    });
+    const [music, artist, album] = queriesResults;
 
-    const [newMusic, setNewMusic] = useState<NewMusicRes[]>([]);
-    const [newArtist, setNewArtist] = useState<NewArtistRes[]>([]);
-    const [newAlbum, setNewAlbum] = useState<NewAlbumRes[]>([]);
+    // Mutations
+    const mutationNewMusic = useMutation({
+        mutationFn: getNewMusic,
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["music"] });
+        },
+    });
+    const mutationNewArtist = useMutation({
+        mutationFn: getNewArtist,
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["album"] });
+        },
+    });
+    const mutationNewAlbums = useMutation({
+        mutationFn: getNewAlbums,
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["artist"] });
+        },
+    });
 
     useEffect(() => {
         (async function () {
@@ -40,14 +72,6 @@ export default function TabOneScreen() {
         });
     }, [userInfo?.username]);
 
-    useEffect(() => {
-        (async function () {
-            setNewMusic(await getNewMusic());
-            setNewArtist(await getNewArtist());
-            setNewAlbum(await getNewAlbums());
-        })();
-    }, []);
-
     if (!userInfo && userInfo === undefined) {
         return (
             <>
@@ -59,54 +83,94 @@ export default function TabOneScreen() {
             </>
         );
     }
+
+    function musicContent() {
+        if (music.isSuccess) {
+            return music.data.map((v) => (
+                <View key={v.musicId}>
+                    <Pressable onPress={() => router.push({ pathname: "/music-detail", params: { id: v.musicId } })}>
+                        <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={20} />
+                    </Pressable>
+                    <NativeText style={{ fontSize: 15, fontWeight: "500" }} numberOfLines={1} ellipsizeMode="tail">
+                        {v.musicName}
+                    </NativeText>
+                </View>
+            ));
+        } else {
+            return [];
+        }
+    }
+
+    function artistContent() {
+        if (artist.isSuccess) {
+            return artist.data.map((v) => (
+                <View key={v.artistId}>
+                    <Pressable onPress={() => router.push({ pathname: "/artist-detail", params: { id: v.artistId } })}>
+                        <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={9999} />
+                    </Pressable>
+                    <NativeText style={{ fontSize: 15, textAlign: "center", fontWeight: "500" }} numberOfLines={1} ellipsizeMode="tail">
+                        {v.artistName}
+                    </NativeText>
+                </View>
+            ));
+        } else {
+            return [];
+        }
+    }
+
+    function albumContent() {
+        if (album.isSuccess) {
+            return album.data.map((v) => (
+                <View key={v.albumId}>
+                    <Pressable onPress={() => router.push({ pathname: "/album-detail", params: { id: v.albumId } })}>
+                        <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={20} />
+                    </Pressable>
+                    <NativeText style={{ fontSize: 15, fontWeight: "500" }} numberOfLines={1} ellipsizeMode="tail">
+                        {v.albumName}
+                    </NativeText>
+                </View>
+            ));
+        } else {
+            return [];
+        }
+    }
+
+    function Content() {
+        if (queriesResults.map((value) => value.isLoading).some((v) => v)) {
+            return <NativeText>Loading...</NativeText>;
+        }
+        if (queriesResults.map((value) => value.isLoadingError).some((v) => v)) {
+            return <>{queriesResults.map((v) => v.error).join("\n")}</>;
+        }
+        return (
+            <>
+                <RecommendedContainer title="New Music" content={() => musicContent()} />
+                <RecommendedContainer title="New Artist" borderRadius={9999} content={() => artistContent()} />
+                <RecommendedContainer title="New Album" content={() => albumContent()} />
+            </>
+        );
+    }
+
+    function refreshDate() {
+        mutationNewMusic.mutate();
+        mutationNewAlbums.mutate();
+        mutationNewArtist.mutate();
+    }
+
     return (
-        <ScrollView style={{ flex: 1, backgroundColor: theme.background }} contentInsetAdjustmentBehavior="automatic">
-            <RecommendedContainer
-                title="New Music"
-                content={() => {
-                    return newMusic.map((v) => (
-                        <View key={v.musicId}>
-                            <Pressable onPress={() => router.push({ pathname: "/music-detail", params: { id: v.musicId } })}>
-                                <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={20} />
-                            </Pressable>
-                            <NativeText style={{ fontSize: 15, fontWeight: "500" }} numberOfLines={1} ellipsizeMode="tail">
-                                {v.musicName}
-                            </NativeText>
-                        </View>
-                    ));
-                }}
-            />
-            <RecommendedContainer
-                title="New Artist"
-                borderRadius={9999}
-                content={() => {
-                    return newArtist.map((v) => (
-                        <View key={v.artistId}>
-                            <Pressable onPress={() => router.push({ pathname: "/artist-detail", params: { id: v.artistId } })}>
-                                <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={9999} />
-                            </Pressable>
-                            <NativeText style={{ fontSize: 15, textAlign: "center", fontWeight: "500" }} numberOfLines={1} ellipsizeMode="tail">
-                                {v.artistName}
-                            </NativeText>
-                        </View>
-                    ));
-                }}
-            />
-            <RecommendedContainer
-                title="New Album"
-                content={() => {
-                    return newAlbum.map((v) => (
-                        <View key={v.albumId}>
-                            <Pressable onPress={() => router.push({ pathname: "/album-detail", params: { id: v.albumId } })}>
-                                <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={20} />
-                            </Pressable>
-                            <NativeText style={{ fontSize: 15, fontWeight: "500" }} numberOfLines={1} ellipsizeMode="tail">
-                                {v.albumName}
-                            </NativeText>
-                        </View>
-                    ));
-                }}
-            />
+        <ScrollView
+            refreshControl={
+                <RefreshControl
+                    refreshing={queriesResults.map((value) => value.isLoading).some((v) => v)}
+                    onRefresh={refreshDate}
+                    colors={["#007AFF"]} // 设置刷新指示器的颜色
+                    progressBackgroundColor="#FFFFFF" // 设置刷新指示器的背景色
+                />
+            }
+            style={{ flex: 1, backgroundColor: theme.background }}
+            contentInsetAdjustmentBehavior="automatic"
+        >
+            <Content />
         </ScrollView>
     );
 }
