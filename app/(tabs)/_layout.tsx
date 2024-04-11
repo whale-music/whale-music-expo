@@ -4,7 +4,7 @@ import { Link, Tabs } from "expo-router";
 import { Pressable } from "react-native";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import { NativeView } from "@/components/Themed";
-import { HardDrive, KeyRound, ListMusic, Settings, UserRound } from "lucide-react-native";
+import { HardDrive, Home, KeyRound, ListMusic, Settings } from "lucide-react-native";
 import { Theme } from "@/constants/Theme";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -33,8 +33,8 @@ export default function TabLayout() {
                 name="index"
                 options={{
                     title: "",
-                    tabBarLabel: "User",
-                    tabBarIcon: ({ color }) => <UserRound size={size} color={color} />,
+                    tabBarLabel: "Home",
+                    tabBarIcon: ({ focused, color }) => <Home size={size} color={color} />,
                     headerRight: () => (
                         <NativeView style={{ flexDirection: "row" }}>
                             <Link href="/login" asChild>
