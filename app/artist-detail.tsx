@@ -1,9 +1,9 @@
 import { NativeButton, NativeText, NativeView } from "@/components/Themed";
-import { Image, Pressable, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { Image, Pressable, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { EllipsisVertical, ListPlus, Play } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import { Theme } from "@/constants/Theme";
-import { Link, useNavigation } from "expo-router";
+import { Link, router, useNavigation } from "expo-router";
 import { useRoute } from "@react-navigation/native";
 import { getMobileArtistDetail, MobileArtistDetailRes } from "@/api/artist";
 
@@ -60,41 +60,42 @@ export default function ArtistDetail() {
                     <NativeView style={{ flexDirection: "column", gap: 10 }}>
                         {artistDetail?.musicList.map((v, index) => {
                             return (
-                                <NativeView
-                                    key={v.id}
-                                    style={{
-                                        backgroundColor: theme.card,
-                                        borderRadius: 10,
-                                        height: 50,
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        justifyContent: "space-between",
-                                        paddingLeft: 5,
-                                        paddingRight: 10,
-                                    }}
-                                >
-                                    <NativeView style={{ flexDirection: "row", alignItems: "center", backgroundColor: "transparent" }}>
-                                        <NativeView
-                                            style={{
-                                                width: "10%",
-                                                flexDirection: "row",
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                                backgroundColor: "transparent",
-                                            }}
-                                        >
-                                            <NativeText style={{ fontSize: 18, opacity: 0.5 }}>{index + 1}</NativeText>
+                                <TouchableOpacity key={v.id} onPress={() => router.push({ pathname: "/music-detail", params: { id: v.id } })}>
+                                    <NativeView
+                                        style={{
+                                            backgroundColor: theme.card,
+                                            borderRadius: 10,
+                                            height: 50,
+                                            flexDirection: "row",
+                                            alignItems: "center",
+                                            justifyContent: "space-between",
+                                            paddingLeft: 5,
+                                            paddingRight: 10,
+                                        }}
+                                    >
+                                        <NativeView style={{ flexDirection: "row", alignItems: "center", backgroundColor: "transparent" }}>
+                                            <NativeView
+                                                style={{
+                                                    width: "10%",
+                                                    flexDirection: "row",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    backgroundColor: "transparent",
+                                                }}
+                                            >
+                                                <NativeText style={{ fontSize: 18, opacity: 0.5 }}>{index + 1}</NativeText>
+                                            </NativeView>
+                                            <NativeView style={{ width: "80%", backgroundColor: "transparent" }}>
+                                                <NativeText style={{ fontSize: 18, fontWeight: "500" }} numberOfLines={1}>
+                                                    {v.musicName}
+                                                </NativeText>
+                                            </NativeView>
                                         </NativeView>
-                                        <NativeView style={{ width: "80%", backgroundColor: "transparent" }}>
-                                            <NativeText style={{ fontSize: 18, fontWeight: "500" }} numberOfLines={1}>
-                                                {v.musicName}
-                                            </NativeText>
+                                        <NativeView>
+                                            <EllipsisVertical fill={theme.accentForeground} color={theme.accentForeground} size={20} />
                                         </NativeView>
                                     </NativeView>
-                                    <NativeView>
-                                        <EllipsisVertical fill={theme.accentForeground} color={theme.accentForeground} size={20} />
-                                    </NativeView>
-                                </NativeView>
+                                </TouchableOpacity>
                             );
                         })}
                     </NativeView>
