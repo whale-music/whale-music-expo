@@ -1,9 +1,9 @@
-import ActionSheet, { SheetProps } from 'react-native-actions-sheet';
-import { Theme } from '@/constants/Theme';
-import { NativeText, NativeView } from '@/components/Themed';
-import { Image } from 'react-native';
+import ActionSheet, { SheetProps } from "react-native-actions-sheet";
+import { Theme } from "@/constants/Theme";
+import { NativeText, NativeView } from "@/components/Themed";
+import { Image } from "react-native";
 
-export default function VideoPreviewActionsSheet(props: SheetProps<'audio-preview'>) {
+export default function VideoPreviewActionsSheet(props: SheetProps<"image-preview">) {
     const theme = Theme();
 
     const resource = props.payload?.value;
@@ -15,8 +15,8 @@ export default function VideoPreviewActionsSheet(props: SheetProps<'audio-previe
                 <>
                     <NativeText style={{ marginBottom: 10 }}>{resource.name}</NativeText>
                     <Image
-                        style={{ height: '80%', aspectRatio: 1 }}
-                        defaultSource={require('@/assets/images/placeholder.png')}
+                        style={{ height: "80%", aspectRatio: 1 }}
+                        defaultSource={require("@/assets/images/placeholder.png")}
                         source={{
                             uri: resource.url,
                         }}
@@ -26,11 +26,7 @@ export default function VideoPreviewActionsSheet(props: SheetProps<'audio-previe
         } else {
             return (
                 <>
-                    <NativeView
-                        style={[
-                            { flex: 1, justifyContent: 'center', alignItems: 'center' },
-                            bgStyle,
-                        ]}>
+                    <NativeView style={[{ flex: 1, justifyContent: "center", alignItems: "center" }, bgStyle]}>
                         <NativeText style={{ fontSize: 20 }}>请重新选择数据</NativeText>
                     </NativeView>
                 </>
@@ -51,18 +47,20 @@ export default function VideoPreviewActionsSheet(props: SheetProps<'audio-previe
                     opacity: 0.6,
                     backgroundColor: theme.foreground,
                 }}
-                gestureEnabled={true}>
+                gestureEnabled={true}
+            >
                 <NativeView style={{ height: 200, backgroundColor: theme.secondary }}>
                     <NativeView
                         style={[
                             {
                                 paddingTop: 20,
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center',
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
                             },
                             bgStyle,
-                        ]}>
+                        ]}
+                    >
                         <AudioPreview />
                     </NativeView>
                 </NativeView>
