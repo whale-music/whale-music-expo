@@ -4,7 +4,7 @@ import { Link, Tabs } from "expo-router";
 import { Pressable } from "react-native";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import { NativeView } from "@/components/Themed";
-import { KeyRound, ListMusic, Settings, UserRound } from "lucide-react-native";
+import { HardDrive, KeyRound, ListMusic, Settings, UserRound } from "lucide-react-native";
 import { Theme } from "@/constants/Theme";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -41,6 +41,13 @@ export default function TabLayout() {
                                 <Pressable>
                                     {({ pressed }) => (
                                         <KeyRound size={25} color={theme.accentForeground} style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }} />
+                                    )}
+                                </Pressable>
+                            </Link>
+                            <Link href="/file-resource-storage" asChild>
+                                <Pressable>
+                                    {({ pressed }) => (
+                                        <HardDrive size={25} color={theme.accentForeground} style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }} />
                                     )}
                                 </Pressable>
                             </Link>

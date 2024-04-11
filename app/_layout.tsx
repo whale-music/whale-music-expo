@@ -101,6 +101,13 @@ function RootLayoutNav() {
                                 }}
                             />
                             <Stack.Screen
+                                name="file-resource-storage"
+                                options={{
+                                    title: "资源",
+                                    headerShown: true,
+                                }}
+                            />
+                            <Stack.Screen
                                 name="playlist-detail"
                                 options={{
                                     title: "",
