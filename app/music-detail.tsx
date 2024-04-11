@@ -1,11 +1,14 @@
 import { NativeButton, NativeText, NativeView } from "@/components/Themed";
 import { Link, useNavigation } from "expo-router";
 import { useRoute } from "@react-navigation/native";
-import { Image, Pressable, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { Image, Pressable, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { EllipsisVertical, ListPlus, Play } from "lucide-react-native";
 import { Theme } from "@/constants/Theme";
 import { getMusicInfo, MobileMusicDetailRes } from "@/api/music";
+import { SheetManager } from "react-native-actions-sheet";
+import { audioPreview } from "@/components/ActionsSheet/sheets";
+import { Resource } from "@/api/resource";
 
 export default function musicDetail() {
     const theme = Theme();
@@ -59,30 +62,38 @@ export default function musicDetail() {
                     <NativeView style={{ flexDirection: "column", gap: 10 }}>
                         {musicInfo?.sources.map((v) => {
                             return (
-                                <NativeView
+                                <TouchableOpacity
                                     key={v.id}
-                                    style={{
-                                        backgroundColor: theme.card,
-                                        borderWidth: 1,
-                                        borderColor: theme.cardForeground,
-                                        borderRadius: 10,
-                                        height: 50,
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        justifyContent: "space-between",
-                                        paddingHorizontal: 10,
-                                    }}
+                                    onPress={() =>
+                                        SheetManager.show(audioPreview, {
+                                            payload: { value: { name: v.md5, url: v.url } as Resource },
+                                        })
+                                    }
                                 >
-                                    <NativeText style={{ fontSize: 12, fontWeight: "500", opacity: 0.5 }}>{v.md5}</NativeText>
                                     <NativeView
                                         style={{
-                                            backgroundColor: v.path === null || v.path === undefined || v.path === "" ? "gray" : "#38b48b",
-                                            width: 10,
-                                            height: 10,
-                                            borderRadius: 9999,
+                                            backgroundColor: theme.card,
+                                            borderWidth: 1,
+                                            borderColor: theme.cardForeground,
+                                            borderRadius: 10,
+                                            height: 50,
+                                            flexDirection: "row",
+                                            alignItems: "center",
+                                            justifyContent: "space-between",
+                                            paddingHorizontal: 10,
                                         }}
-                                    />
-                                </NativeView>
+                                    >
+                                        <NativeText style={{ fontSize: 12, fontWeight: "500", opacity: 0.5 }}>{v.md5}</NativeText>
+                                        <NativeView
+                                            style={{
+                                                backgroundColor: v.path === null || v.path === undefined || v.path === "" ? "gray" : "#38b48b",
+                                                width: 10,
+                                                height: 10,
+                                                borderRadius: 9999,
+                                            }}
+                                        />
+                                    </NativeView>
+                                </TouchableOpacity>
                             );
                         })}
                     </NativeView>
