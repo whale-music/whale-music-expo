@@ -8,7 +8,6 @@ import { Theme } from "@/constants/Theme";
 import { getMusicInfo, MobileMusicDetailRes } from "@/api/music";
 import { SheetManager } from "react-native-actions-sheet";
 import { audioPreview } from "@/components/ActionsSheet/sheets";
-import { Resource } from "@/api/resource";
 
 export default function musicDetail() {
     const theme = Theme();
@@ -66,7 +65,7 @@ export default function musicDetail() {
                                     key={v.id}
                                     onPress={() =>
                                         SheetManager.show(audioPreview, {
-                                            payload: { value: { name: v.md5, url: v.url } as Resource },
+                                            payload: { value: { name: v.md5, url: v.url } },
                                         })
                                     }
                                 >

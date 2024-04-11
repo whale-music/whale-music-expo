@@ -1,29 +1,25 @@
-import ActionSheet, { SheetProps } from 'react-native-actions-sheet';
-import { NativeText, NativeView } from '@/components/Themed';
-import { Theme } from '@/constants/Theme';
-import AudioPlay from '@/components/AudioPlay';
+import ActionSheet, { SheetProps } from "react-native-actions-sheet";
+import { NativeText, NativeView } from "@/components/Themed";
+import { Theme } from "@/constants/Theme";
+import AudioPlay from "@/components/AudioPlay";
 
-export default function AudioPreviewActionsSheet(props: SheetProps<'audio-preview'>) {
+export default function AudioPreviewActionsSheet(props: SheetProps<"audio-preview">) {
     const theme = Theme();
 
-    const resource = props.payload?.value;
+    const { name, url } = props.payload?.value as { name: string; url: string };
     const bgStyle = { backgroundColor: theme.secondary };
 
     function AudioPreview() {
-        if (resource && resource.url !== null && resource.url.trim().length > 0) {
+        if (url && url.trim().length > 0) {
             return (
                 <>
-                    <AudioPlay resource={resource} url={resource.url} style={bgStyle} />
+                    <AudioPlay name={name} url={url} style={bgStyle} />
                 </>
             );
         } else {
             return (
                 <>
-                    <NativeView
-                        style={[
-                            { flex: 1, justifyContent: 'center', alignItems: 'center' },
-                            bgStyle,
-                        ]}>
+                    <NativeView style={[{ flex: 1, justifyContent: "center", alignItems: "center" }, bgStyle]}>
                         <NativeText style={{ fontSize: 20 }}>请重新选择数据</NativeText>
                     </NativeView>
                 </>
@@ -44,18 +40,20 @@ export default function AudioPreviewActionsSheet(props: SheetProps<'audio-previe
                     opacity: 0.6,
                     backgroundColor: theme.foreground,
                 }}
-                gestureEnabled={true}>
+                gestureEnabled={true}
+            >
                 <NativeView style={{ height: 200, backgroundColor: theme.secondary }}>
                     <NativeView
                         style={[
                             {
                                 paddingTop: 20,
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center',
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
                             },
                             bgStyle,
-                        ]}>
+                        ]}
+                    >
                         <AudioPreview />
                     </NativeView>
                 </NativeView>

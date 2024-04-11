@@ -1,25 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { Audio, AudioMode } from 'expo-av';
-import { InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av/src/Audio.types';
-import { AVPlaybackStatus } from 'expo-av/src/AV';
-import { AVPlaybackStatusSuccess } from 'expo-av/src/AV.types';
-import { NativeButton, NativeText, NativeView } from '@/components/Themed';
-import { Resource } from '@/api/resource';
-import { StyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
-import { ViewStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-import Slider from '@react-native-community/slider';
-import Toast from 'react-native-root-toast';
+import React, { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
+import { Audio, AudioMode } from "expo-av";
+import { InterruptionModeAndroid, InterruptionModeIOS } from "expo-av/src/Audio.types";
+import { AVPlaybackStatus } from "expo-av/src/AV";
+import { AVPlaybackStatusSuccess } from "expo-av/src/AV.types";
+import { NativeButton, NativeText, NativeView } from "@/components/Themed";
+import { StyleProp } from "react-native/Libraries/StyleSheet/StyleSheet";
+import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+import Slider from "@react-native-community/slider";
+import Toast from "react-native-root-toast";
 
-export default function AudioPlay({
-    resource,
-    url,
-    style,
-}: {
-    resource: Resource;
-    url: string;
-    style: StyleProp<ViewStyle>;
-}) {
+export default function AudioPlay({ name, url, style }: { name: string; url: string; style: StyleProp<ViewStyle> }) {
     const [audioSound, setAudioSound] = useState<Audio.Sound>();
 
     const [avPlaybackStatus, setAVPlaybackStatus] = useState<AVPlaybackStatus>();
@@ -38,7 +29,7 @@ export default function AudioPlay({
             } as Partial<AudioMode>;
 
             await Audio.setAudioModeAsync(configs);
-            console.log('init audio');
+            console.log("init audio");
         } catch (error) {
             console.log(`[Audio Error][init]: ${error}`);
             Toast.show(`audio init error ${error}`);
@@ -72,7 +63,7 @@ export default function AudioPlay({
     useEffect(() => {
         return audioSound
             ? () => {
-                  console.log('Unloading Sound');
+                  console.log("Unloading Sound");
                   audioSound.unloadAsync();
               }
             : undefined;
@@ -88,15 +79,9 @@ export default function AudioPlay({
         return (
             <>
                 <NativeView style={[styles.buttonContainer, style]}>
-                    <NativeText style={{ fontSize: 15 }}>{resource?.name}</NativeText>
-                    <NativeView
-                        style={[
-                            { flexDirection: 'row', alignItems: 'center', width: '100%' },
-                            style,
-                        ]}>
-                        <NativeText style={{ opacity: 0.5 }}>
-                            {lastSeconds(audioStatus?.positionMillis, audioStatus?.durationMillis)}
-                        </NativeText>
+                    <NativeText style={{ fontSize: 15 }}>{name}</NativeText>
+                    <NativeView style={[{ flexDirection: "row", alignItems: "center", width: "100%" }, style]}>
+                        <NativeText style={{ opacity: 0.5 }}>{lastSeconds(audioStatus?.positionMillis, audioStatus?.durationMillis)}</NativeText>
                         <Slider
                             style={{ flexGrow: 1 }}
                             minimumValue={0}
@@ -109,22 +94,18 @@ export default function AudioPlay({
                             disabled={!audioStatus?.isPlaying}
                             tapToSeek={true}
                         />
-                        <NativeText style={{ opacity: 0.5 }}>
-                            {secondsToTime(audioStatus?.durationMillis)}
-                        </NativeText>
+                        <NativeText style={{ opacity: 0.5 }}>{secondsToTime(audioStatus?.durationMillis)}</NativeText>
                     </NativeView>
                     {audioStatus?.isPlaying ? (
                         <NativeButton
-                            style={{ backgroundColor: 'white', borderWidth: 1 }}
-                            textStyle={{ color: 'black' }}
-                            onPress={() => audioSound?.pauseAsync()}>
+                            style={{ backgroundColor: "white", borderWidth: 1 }}
+                            textStyle={{ color: "black" }}
+                            onPress={() => audioSound?.pauseAsync()}
+                        >
                             暂停
                         </NativeButton>
                     ) : (
-                        <NativeButton
-                            style={{ backgroundColor: 'white', borderWidth: 1 }}
-                            textStyle={{ color: 'black' }}
-                            onPress={playSound}>
+                        <NativeButton style={{ backgroundColor: "white", borderWidth: 1 }} textStyle={{ color: "black" }} onPress={playSound}>
                             播放
                         </NativeButton>
                     )}
@@ -142,48 +123,48 @@ export default function AudioPlay({
 
 function lastSeconds(current: number | undefined, seconds: number | undefined) {
     if (!current || !seconds) {
-        return '00:00';
+        return "00:00";
     }
-    return '-' + secondsToTime(seconds - current);
+    return "-" + secondsToTime(seconds - current);
 }
 
 // 将秒转化成时分秒
 function secondsToTime(seconds: number | undefined) {
     if (!seconds) {
-        return '00:00';
+        return "00:00";
     }
     seconds = seconds / 1000;
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
 
-    const formattedMinutes = String(minutes).padStart(2, '0');
-    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    const formattedSeconds = String(remainingSeconds).padStart(2, "0");
 
     return `${formattedMinutes}:${formattedSeconds}`;
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'column',
+        flexDirection: "column",
     },
     buttonContainer: {
-        flexDirection: 'column',
+        flexDirection: "column",
         gap: 5,
-        justifyContent: 'space-around',
+        justifyContent: "space-around",
     },
     playInfoText: {
-        color: 'white',
-        textAlign: 'center',
+        color: "white",
+        textAlign: "center",
     },
     sliderContainer: {},
     line: {
         width: 100,
         height: 4,
-        backgroundColor: 'red',
+        backgroundColor: "red",
         zIndex: 1,
     },
     slider: {
-        position: 'relative',
+        position: "relative",
         left: 0,
         top: 0,
     },

@@ -153,7 +153,7 @@ export default function App() {
         const onPress = async () => {
             if (resource.type === "audio") {
                 await SheetManager.show(audioPreview, {
-                    payload: { value: resource },
+                    payload: { value: { name: resource.name, url: resource.url } },
                 });
                 return;
             }
