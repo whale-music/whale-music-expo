@@ -82,7 +82,9 @@ export default function TabOneScreen() {
                 content={() => {
                     return newArtist.map((v) => (
                         <View key={v.artistId}>
-                            <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={9999} />
+                            <Pressable onPress={() => router.push({ pathname: "/artist-detail", params: { id: v.artistId } })}>
+                                <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={9999} />
+                            </Pressable>
                             <NativeText style={{ fontSize: 15, textAlign: "center", fontWeight: "500" }} numberOfLines={1} ellipsizeMode="tail">
                                 {v.artistName}
                             </NativeText>
