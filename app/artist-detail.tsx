@@ -83,7 +83,7 @@ export default function ArtistDetail() {
                                                 backgroundColor: "transparent",
                                             }}
                                         >
-                                            <NativeText style={{ fontSize: 18, opacity: 0.5 }}>{index}</NativeText>
+                                            <NativeText style={{ fontSize: 18, opacity: 0.5 }}>{index + 1}</NativeText>
                                         </NativeView>
                                         <NativeView style={{ width: "80%", backgroundColor: "transparent" }}>
                                             <NativeText style={{ fontSize: 18, fontWeight: "500" }} numberOfLines={1}>
