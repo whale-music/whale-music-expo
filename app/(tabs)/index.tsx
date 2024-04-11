@@ -97,7 +97,9 @@ export default function TabOneScreen() {
                 content={() => {
                     return newAlbum.map((v) => (
                         <View key={v.albumId}>
-                            <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={20} />
+                            <Pressable onPress={() => router.push({ pathname: "/album-detail", params: { id: v.albumId } })}>
+                                <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={20} />
+                            </Pressable>
                             <NativeText style={{ fontSize: 15, fontWeight: "500" }} numberOfLines={1} ellipsizeMode="tail">
                                 {v.albumName}
                             </NativeText>

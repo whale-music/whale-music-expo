@@ -132,6 +132,18 @@ function RootLayoutNav() {
                                     headerShadowVisible: false,
                                 }}
                             />
+                            <Stack.Screen
+                                name="album-detail"
+                                options={{
+                                    title: "Album",
+                                    headerLargeTitleShadowVisible: false,
+                                    headerBackTitleVisible: false,
+                                    headerStyle: {
+                                        backgroundColor: themeColor.background,
+                                    },
+                                    headerShadowVisible: false,
+                                }}
+                            />
                         </Stack>
                     </MusicPlayerBottomBar>
                 </ThemeProvider>
