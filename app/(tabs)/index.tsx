@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { NativeButton, NativeText, NativeView } from "@/components/Themed";
 import { router, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -66,8 +66,12 @@ export default function TabOneScreen() {
                 content={() => {
                     return newMusic.map((v) => (
                         <View key={v.musicId}>
-                            <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={20} />
-                            <NativeText style={{ fontSize: 15, fontWeight: "500" }}>{v.musicName}</NativeText>
+                            <Pressable onPress={() => router.push({ pathname: "/music-detail", params: { id: v.musicId } })}>
+                                <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={20} />
+                            </Pressable>
+                            <NativeText style={{ fontSize: 15, fontWeight: "500" }} numberOfLines={1} ellipsizeMode="tail">
+                                {v.musicName}
+                            </NativeText>
                         </View>
                     ));
                 }}
@@ -79,7 +83,9 @@ export default function TabOneScreen() {
                     return newArtist.map((v) => (
                         <View key={v.artistId}>
                             <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={9999} />
-                            <NativeText style={{ fontSize: 15, textAlign: "center", fontWeight: "500" }}>{v.artistName}</NativeText>
+                            <NativeText style={{ fontSize: 15, textAlign: "center", fontWeight: "500" }} numberOfLines={1} ellipsizeMode="tail">
+                                {v.artistName}
+                            </NativeText>
                         </View>
                     ));
                 }}
@@ -90,7 +96,9 @@ export default function TabOneScreen() {
                     return newAlbum.map((v) => (
                         <View key={v.albumId}>
                             <Image source={{ uri: v.picUrl }} resizeMode="center" style={{ width: "100%", aspectRatio: 1 }} borderRadius={20} />
-                            <NativeText style={{ fontSize: 15, fontWeight: "500" }}>{v.albumName}</NativeText>
+                            <NativeText style={{ fontSize: 15, fontWeight: "500" }} numberOfLines={1} ellipsizeMode="tail">
+                                {v.albumName}
+                            </NativeText>
                         </View>
                     ));
                 }}
