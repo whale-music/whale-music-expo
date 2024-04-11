@@ -41,19 +41,16 @@ export default function musicDetail() {
                         <NativeText style={{ fontSize: 20, fontWeight: "700" }}>{musicInfo?.musicName}</NativeText>
                         <NativeText style={{ fontSize: 15, fontWeight: "400", opacity: 0.6 }}>{musicInfo?.aliasName}</NativeText>
                         <NativeView style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
-                            <NativeButton>
-                                <NativeView style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <Play fill={theme.accentForeground} color={theme.accentForeground} size={20} />
-                                    <NativeText>Play</NativeText>
-                                </NativeView>
+                            <NativeButton
+                                style={{ backgroundColor: "white" }}
+                                textStyle={{ color: "#000" }}
+                                icon={<Play fill="#000" color="#000" size={20} />}
+                            >
+                                Play
                             </NativeButton>
-                            <NativeButton>
-                                <NativeView style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <ListPlus size={20} color={theme.accentForeground} />
-                                    <NativeText style={{ fontWeight: "600" }}>收藏</NativeText>
-                                </NativeView>
+                            <NativeButton style={{ borderColor: theme.accent }} icon={<ListPlus size={20} color={theme.accentForeground} />}>
+                                收藏
                             </NativeButton>
-                            {/*<Heart size={28} color={theme.accentForeground} />*/}
                         </NativeView>
                     </NativeView>
                 </NativeView>
