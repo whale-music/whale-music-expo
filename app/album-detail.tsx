@@ -48,7 +48,7 @@ export default function albumDetail() {
                                 Play
                             </NativeButton>
                             <NativeButton style={{ borderColor: theme.accent }} icon={<ListPlus size={20} color={theme.accentForeground} />}>
-                                <NativeText style={{ fontWeight: "600" }}>收藏</NativeText>
+                                <NativeText style={{ fontWeight: "600" }}>star</NativeText>
                             </NativeButton>
                         </NativeView>
                     </NativeView>
