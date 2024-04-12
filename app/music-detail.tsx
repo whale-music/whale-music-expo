@@ -51,7 +51,7 @@ export default function musicDetail() {
                                 Play
                             </NativeButton>
                             <NativeButton style={{ borderColor: theme.accent }} icon={<ListPlus size={20} color={theme.accentForeground} />}>
-                                收藏
+                                star
                             </NativeButton>
                         </NativeView>
                     </NativeView>

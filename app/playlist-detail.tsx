@@ -22,6 +22,7 @@ export default function PlaylistDetail() {
 
     useEffect(() => {
         navigation.setOptions({
+            title: "Playlist",
             headerRight: () => (
                 <>
                     <TouchableOpacity>
@@ -121,7 +122,7 @@ export default function PlaylistDetail() {
                                     style={{ backgroundColor: "transparent", borderColor: theme.primary, borderWidth: 1 }}
                                     textStyle={{ color: theme.primary }}
                                 >
-                                    收藏
+                                    star
                                 </NativeButton>
                             </NativeView>
                         </NativeView>
