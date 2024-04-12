@@ -7,7 +7,7 @@ import { Link, router, useNavigation } from "expo-router";
 import { useRoute } from "@react-navigation/native";
 import { getAlbumDetail, MobileAlbumDetailRes } from "@/api/album";
 
-export default function () {
+export default function albumDetail() {
     const theme = Theme();
     const navigation = useNavigation();
     const route = useRoute();

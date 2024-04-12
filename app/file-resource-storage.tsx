@@ -21,7 +21,7 @@ const initialSortState = {
     date: false,
     size: false,
 };
-export default function App() {
+export default function FileResourceStorage() {
     const theme = Theme();
     const navigation = useNavigation();
 

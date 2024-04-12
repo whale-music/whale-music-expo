@@ -11,7 +11,7 @@ import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
 
 const expirationTime = 24 * 60 * 60 * 1000;
 
-export default function TabOneScreen() {
+export default function Index() {
     const theme = Theme();
     const navigation = useNavigation();
     // Access the client

@@ -4,7 +4,7 @@ import { NativeButton, NativeView } from "@/components/Themed";
 import { removeUserStore } from "@/store/user";
 import Toast from "react-native-root-toast";
 
-export default function ModalScreen() {
+export default function Setting() {
     async function destroyUserCache() {
         await removeUserStore();
         Toast.show("清除成功");
